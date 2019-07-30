@@ -1,0 +1,7 @@
+{
+    "ftype": "go",
+    "goftm": true,
+    "goimports": false,
+	"tabstospaces": false,
+	"smartindent": true
+}

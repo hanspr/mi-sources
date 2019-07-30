@@ -1,0 +1,13 @@
+filetype: text
+
+detect:
+    filename: "^\\w+$"
+
+rules:
+    - comment: "^[[:space:]]*[#]+.*"
+    - statement: "^.+?[[:space:]]*[:=]"
+    - special: "(Host|Cipher|Protocol|HostName|User|IdentityFile|Compression|TCPKeepAlive|ServerAliveInterval)"
+    - constant.string: "[[:space:]]*[\\*\\+\\-] \\w+"
+    - constant.string: "['\"].*?['\"]"
+    
+
