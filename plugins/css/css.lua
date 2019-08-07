@@ -1,18 +1,18 @@
 
 VERSION="0.0.1"
 
-function flatten(view)
+function compress(view)
     CurView():Save(false)
-    local handle = io.popen("perl ~/.config/micro-ide/plugins/css/flatten.pl '" .. CurView().Buf.Path .. "'")
+    local handle = io.popen("perl ~/.config/micro-ide/plugins/css/compress.pl '" .. CurView().Buf.Path .. "'")
     local result = handle:read("*a")
     handle:close()
 
     CurView():ReOpen()
 end
 
-function unflatten(view)
+function decompress(view)
     CurView():Save(false)
-    local handle = io.popen("perl ~/.config/micro-ide/plugins/css/unflatten.pl '" .. CurView().Buf.Path .. "'")
+    local handle = io.popen("perl ~/.config/micro-ide/plugins/css/decompress.pl '" .. CurView().Buf.Path .. "'")
     local result = handle:read("*a")
     handle:close()
 
@@ -20,10 +20,10 @@ function unflatten(view)
 end
 
 function onDisplayFocus(view)
-	MakeCommand("cssflatten","css.flatten",0)
-	BindKey("F12", "css.flatten")
-	MakeCommand("cssunflatten","css.unflatten",0)
-	BindKey("F11", "css.unflatten")
+	MakeCommand("csscompress","css.compress",0)
+	BindKey("F12", "css.compress")
+	MakeCommand("cssdecompress","css.decompress",0)
+	BindKey("F11", "css.decompress")
 end
 
 function onViewOpen(view)

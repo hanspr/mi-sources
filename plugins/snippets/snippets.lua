@@ -547,5 +547,5 @@ AddRuntimeFilesFromDirectory("snippets", "snippets", "snippets", "*.snippets")
 
 BindKey("Alt-w", "snippets.Next")
 BindKey("Alt-a", "snippets.Accept")
---BindKey("Alt-s", "snippets.Insert")
+BindKey("Alt-s", "snippets.Insert")
 BindKey("Alt-d", "snippets.Cancel")
