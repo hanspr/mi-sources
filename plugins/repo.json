@@ -1,0 +1,84 @@
+[{
+  "Name": "css",
+  "Description": "CSS language",
+  "Tags": ["language", "css"],
+  "Versions": [
+    {
+      "Version": "1.0.0",
+      "Url": "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/css.zip",
+      "Require": {
+        "micro": ">=1.1.0"
+      }
+    }
+  ]
+},
+{
+  "Name": "go",
+  "Description": "Go language",
+  "Tags": ["language", "go"],
+  "Versions": [
+    {
+      "Version": "1.0.0",
+      "Url": "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/go.zip",
+      "Require": {
+        "micro": ">=1.1.0"
+      }
+    }
+  ]
+},
+{
+  "Name": "perl",
+  "Description": "Perl language",
+  "Tags": ["language", "perl"],
+  "Versions": [
+    {
+      "Version": "1.0.0",
+      "Url": "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/perl.zip",
+      "Require": {
+        "micro": ">=1.1.0"
+      }
+    }
+  ]
+},
+{
+  "Name": "snippets",
+  "Description": "Snippets plugin for multiple languages",
+  "Tags": ["plugin", "snippets"],
+  "Versions": [
+    {
+      "Version": "1.0.0",
+      "Url": "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/snippets.zip",
+      "Require": {
+        "micro": ">=1.1.0"
+      }
+    }
+  ]
+},
+{
+  "Name": "text",
+  "Description": "Text generic configuration",
+  "Tags": ["language", "text","plain"],
+  "Versions": [
+    {
+      "Version": "1.0.0",
+      "Url": "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/text.zip",
+      "Require": {
+        "micro": ">=1.1.0"
+      }
+    }
+  ]
+},
+{
+  "Name": "yaml",
+  "Description": "Yaml configuration files",
+  "Tags": ["language", "yaml"],
+  "Versions": [
+    {
+      "Version": "1.0.0",
+      "Url": "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/yaml.zip",
+      "Require": {
+        "micro": ">=1.1.0"
+      }
+    }
+  ]
+}]
