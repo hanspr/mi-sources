@@ -1,5 +1,6 @@
 {
     "ftype": "go",
+	"version": "1.0.0",
     "gofmt": true,
     "goimports": false,
 	"tabstospaces": false,

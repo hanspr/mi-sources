@@ -1,4 +1,4 @@
-VERSION = "0.1.5"
+VERSION = "1.0.0"
 
 local curFileType = ""
 local snippets = {}

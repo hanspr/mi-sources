@@ -1,8 +1,9 @@
 [{
   "Name": "css",
   "Author": "hanspr",
+  "Filetype": "css",
   "Description": "CSS language",
-  "Tags": ["language", "css"],
+  "Tags": ["language"],
   "Versions": [
     {
       "Version": "1.0.0",
@@ -16,8 +17,9 @@
 {
   "Name": "go",
   "Author": "hanspr",
+  "Filetype": "go",
   "Description": "Go language",
-  "Tags": ["language", "go"],
+  "Tags": ["language"],
   "Versions": [
     {
       "Version": "1.0.0",
@@ -31,8 +33,9 @@
 {
   "Name": "perl",
   "Author": "hanspr",
+  "Filetype": "perl",
   "Description": "Perl language",
-  "Tags": ["language", "perl"],
+  "Tags": ["language"],
   "Versions": [
     {
       "Version": "1.0.0",
@@ -46,8 +49,9 @@
 {
   "Name": "snippets",
   "Author": "hanspr",
+  "Filetype": "*",
   "Description": "Snippets plugin for multiple languages",
-  "Tags": ["plugin", "snippets"],
+  "Tags": ["application", "snippets"],
   "Versions": [
     {
       "Version": "1.0.0",
@@ -61,8 +65,9 @@
 {
   "Name": "text",
   "Author": "hanspr",
+  "Filetype": "text",
   "Description": "Text generic configuration",
-  "Tags": ["language", "text","plain"],
+  "Tags": ["language","plain"],
   "Versions": [
     {
       "Version": "1.0.0",
@@ -76,8 +81,9 @@
 {
   "Name": "yaml",
   "Author": "hanspr",
+  "Filetype": "yaml",
   "Description": "Yaml configuration files",
-  "Tags": ["language", "yaml"],
+  "Tags": ["language"],
   "Versions": [
     {
       "Version": "1.0.0",

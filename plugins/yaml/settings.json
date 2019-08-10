@@ -1,5 +1,6 @@
 {
 	"ftype": "yaml",
+	"version": "1.0.0",
 	"smartindent": false,
     "autoclose": true,
     "autoindent": true,

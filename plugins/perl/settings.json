@@ -1,5 +1,6 @@
 {
     "ftype": "perl",
+	"version": "1.0.0",
     "perlsyntaxstrict": false,
     "smartindent": true,
     "tabstospaces": false

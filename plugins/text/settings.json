@@ -1,5 +1,6 @@
 {
 	"ftype": "text",
+	"version": "1.0.0",
 	"tabstospaces": false,
 	"smartindent": false,
     "autoclose": false,
