@@ -1,5 +1,6 @@
 [{
   "Name": "css",
+  "Author": "hanspr",
   "Description": "CSS language",
   "Tags": ["language", "css"],
   "Versions": [
@@ -14,6 +15,7 @@
 },
 {
   "Name": "go",
+  "Author": "hanspr",
   "Description": "Go language",
   "Tags": ["language", "go"],
   "Versions": [
@@ -28,6 +30,7 @@
 },
 {
   "Name": "perl",
+  "Author": "hanspr",
   "Description": "Perl language",
   "Tags": ["language", "perl"],
   "Versions": [
@@ -42,6 +45,7 @@
 },
 {
   "Name": "snippets",
+  "Author": "hanspr",
   "Description": "Snippets plugin for multiple languages",
   "Tags": ["plugin", "snippets"],
   "Versions": [
@@ -56,6 +60,7 @@
 },
 {
   "Name": "text",
+  "Author": "hanspr",
   "Description": "Text generic configuration",
   "Tags": ["language", "text","plain"],
   "Versions": [
@@ -70,6 +75,7 @@
 },
 {
   "Name": "yaml",
+  "Author": "hanspr",
   "Description": "Yaml configuration files",
   "Tags": ["language", "yaml"],
   "Versions": [
