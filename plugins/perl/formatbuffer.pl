@@ -25,6 +25,10 @@ while($line = <FO>) {
 		my $tabs = "\t" x $n;
 		$line = $tabs.$line;
 	}
+	if ($line =~ /^\t+#/) {
+		print FN $line;
+		next;
+	}
 	my ($b,$match) = balanced($line);
 	if ($b>0) {
 		$n++;
