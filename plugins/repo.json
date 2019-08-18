@@ -61,36 +61,4 @@
       }
     }
   ]
-},
-{
-  "Name": "text",
-  "Author": "hanspr",
-  "Filetype": "text",
-  "Description": "Text generic configuration",
-  "Tags": ["language","plain"],
-  "Versions": [
-    {
-      "Version": "1.0.0",
-      "Url": "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/text.zip",
-      "Require": {
-        "micro": ">=1.1.0"
-      }
-    }
-  ]
-},
-{
-  "Name": "yaml",
-  "Author": "hanspr",
-  "Filetype": "yaml",
-  "Description": "Yaml configuration files",
-  "Tags": ["language"],
-  "Versions": [
-    {
-      "Version": "1.0.0",
-      "Url": "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/yaml.zip",
-      "Require": {
-        "micro": ">=1.1.0"
-      }
-    }
-  ]
 }]
