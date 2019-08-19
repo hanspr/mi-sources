@@ -40,7 +40,7 @@ function gofmt(view)
 	msg,err=ExecCommand("gofmt","-e",CurView().Buf.Path)
     if err ~= nil then
         if ErrorView == nil then
-            view:VSplitIndex(NewBuffer(msg, "Error"), 1)
+            view:HSplitIndex(NewBuffer(msg, "Error"), 1)
             ErrorView = CurView()
             ErrorView.Type.Kind=2
             ErrorView.Type.Readonly = true

@@ -59,7 +59,7 @@ function perlCheck(view,fpath)
         if ErrorView == nil then
         	curLoc.X = view.Cursor.Loc.X
         	curLoc.Y = view.Cursor.Loc.Y
-            view:VSplitIndex(NewBuffer(msg, "Error"), 1)
+            view:HSplitIndex(NewBuffer(msg, "Error"), 1)
             ErrorView = CurView()
             ErrorView.Type.Kind=2
             ErrorView.Type.Readonly = true
