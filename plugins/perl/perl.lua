@@ -93,6 +93,7 @@ function perlCheck(view,fpath)
 			end
 			view.Cursor:GotoLoc(xy)
 			view:Center(false)
+			view:Relocate()
 		end
 		messenger:Error("Syntax Error")
 		return false

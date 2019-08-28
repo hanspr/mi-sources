@@ -8,6 +8,7 @@ function compress(view)
     handle:close()
 
     CurView():ReOpen()
+    CurView():Center(false)
 end
 
 function decompress(view)
