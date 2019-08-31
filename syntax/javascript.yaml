@@ -30,9 +30,9 @@ rules:
     - comment: "^#!.*/(env +)?node( |$)"
     - constant.string: "\"\""
     - constant.string: "\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\""
-    - constant.string: "\'.*?\'"
     - symbol.tag: "</?[A-Za-z0-9:]+/?[ >]"
     - type.keyword1: "\\w+=['\"]"
+    - constant.string: "\'.*?\'"
     - special: "/.+/[gim,]"
 
     - constant.string:
