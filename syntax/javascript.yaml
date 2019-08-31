@@ -25,10 +25,14 @@ rules:
     - constant: "\\b(true|false)\\b"
     - type: "\\b(Array|Boolean|Date|Enumerator|Error|Function|Math)\\b"
     - type: "\\b(Number|Object|RegExp|String)\\b"
-    # - constant: "/[^*]([^/]|(\\\\/))*[^\\\\]/[gim]*"
     - constant: "\\\\[0-7][0-7]?[0-7]?|\\\\x[0-9a-fA-F]+|\\\\[bfnrt'\"\\?\\\\]"
     - comment: "^#!.*/(env +)?node( |$)"
 
+    - default:
+        start: "/"
+        end: "/"
+        skip: "\\\\."
+        rules: []
 
     - constant.string:
         start: "\""
