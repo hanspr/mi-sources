@@ -1,5 +1,6 @@
 {
     "ftype": "perl",
     "perlsyntaxstrict": false,
+    "addcomma": true,
     "version": "1.0.0"
 }

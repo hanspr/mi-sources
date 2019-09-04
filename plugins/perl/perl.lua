@@ -3,9 +3,14 @@ VERSION = "1.0.0"
 
 local ErrorView = nil
 local curLoc = {}
+local addcomma = true
 
 if GetPluginOption("perl","perlsyntaxstrict") == nil then
 	AddPluginOption("perl","perlsyntaxstrict", false)
+end
+
+if GetPluginOption("perl","addcomma") == nil then
+	AddPluginOption("perl","addcomma", true)
 end
 
 function preQuit(view)
@@ -19,6 +24,7 @@ end
 function setperlstrict()
 	BindKey("F12", "perl.togglestrict")
 	BindKey("F11", "perl.formatbuffer")
+	BindKey("F9", "perl.togglecommas")
 end
 
 function formatbuffer(view)
@@ -30,6 +36,38 @@ function formatbuffer(view)
     handle:close()
     CurView().Buf.IsModified=false
     CurView():ReOpen()
+end
+
+function togglecommas()
+	local view = CurView()
+	if GetPluginOption("perl","addcomma") == true then
+		SetPluginOption("perl","addcomma",false)
+		addcomma = false
+		messenger:Message("addcomma = false")
+		xy = view.Cursor.Loc
+		cloc={}
+		cloc.X=xy.X
+		cloc.Y=xy.Y
+		lstart = {}
+		lstart.X=0
+		lstart.Y=xy.Y
+		line = view.Buf:Line(xy.Y)
+		l=utf8len(line)
+		lend = {}
+		lend.X=l
+		lend.Y=xy.Y
+		lchar = utf8sub(line,-1)
+		if lchar==";" then
+			line = utf8sub(line,1,-2)
+			view.Buf:Replace(lstart,lend,line)
+			view.Cursor:GotoLoc(cloc)
+		end
+	else
+		SetPluginOption("perl","addcomma",true)
+		messenger:Message("addcomma = true")
+		addcomma = true
+		onRune("",view)
+	end
 end
 
 function togglestrict()
@@ -127,12 +165,16 @@ function onViewOpen(view)
 end
 
 function onOpen(view)
+	addcomma = GetPluginOption("perl","addcomma")
     onDisplayFocus(view)
 end
 
 -- Insert ; at the end of lines to avoid typing it
 -- Use Alt Enter to avoid going to the end after for the new line
 function onRune(char,view)
+	if addcomma==false then
+		return true
+	end
 	xy = view.Cursor.Loc
 	cloc={}
 	cloc.X=xy.X
