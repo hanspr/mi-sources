@@ -68,6 +68,7 @@ function togglecommas()
 		addcomma = true
 		onRune("",view)
 	end
+	WritePluginSettings("perl")
 end
 
 function togglestrict()
