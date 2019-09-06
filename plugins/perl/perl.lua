@@ -172,6 +172,13 @@ end
 
 -- Insert ; at the end of lines to avoid typing it
 -- Use Alt Enter to avoid going to the end after for the new line
+
+function onBackspace(view)
+	if view.Buf:Line(view.Cursor.Loc.Y)==";" then
+		view:Delete(false)
+	end
+end
+
 function onRune(char,view)
 	if addcomma==false then
 		return true
@@ -191,7 +198,7 @@ function onRune(char,view)
 	lchar = utf8sub(line,-1)
 	if lchar==";" then
 		lchar = utf8sub(line,-2,-1)
-		if lchar=="{;" or lchar=="};" or lchar=="(;" or lchar==",;" or lchar==";;" then
+		if lchar=="{;" or (lchar=="};" and char ~= ";") or lchar=="(;" or lchar==",;" or lchar==";;" then
 			line = utf8sub(line,1,-2)
 			view.Buf:Replace(lstart,lend,line)
 			view.Cursor:GotoLoc(cloc)
