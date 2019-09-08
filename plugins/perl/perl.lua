@@ -3,7 +3,7 @@ VERSION = "1.0.0"
 
 local ErrorView = nil
 local curLoc = {}
-local addcomma = true
+local addcomma = false
 
 if GetPluginOption("perl","perlsyntaxstrict") == nil then
 	AddPluginOption("perl","perlsyntaxstrict", false)
@@ -162,10 +162,6 @@ function onDisplayFocus(view)
 end
 
 function onViewOpen(view)
-    onDisplayFocus(view)
-end
-
-function onOpen(view)
 	addcomma = GetPluginOption("perl","addcomma")
     onDisplayFocus(view)
 end
