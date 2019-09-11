@@ -3,6 +3,7 @@ VERSION = "1.0.0"
 local curFileType = ""
 local snippets = {}
 local currentSnippet = nil
+local autoclose = false
 
 local Location = {}
 Location.__index = Location
@@ -492,6 +493,11 @@ function Insert(name)
 		else
 			currentSnippet:focusNext()
 		end
+		if GetOption("autoclose")==true then
+			-- Disable autoclose during snippet edit, it conflicts
+			autoclose=true
+			SetLocalOption("autoclose","false",v)
+		end
 	else
 		messenger:Message("Unknown snippet \""..name.."\"")
 	end
@@ -504,6 +510,10 @@ function Next()
 end
 
 function Accept()
+	if autoclose==true then
+		-- Enable autoclose after snippet edit ends
+		SetLocalOption("autoclose","true",currentSnippet.view)
+	end
 	currentSnippet = nil
 end
 
