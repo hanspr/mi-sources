@@ -512,7 +512,7 @@ end
 function Accept()
 	if autoclose==true then
 		-- Enable autoclose after snippet edit ends
-		SetLocalOption("autoclose","true",currentSnippet.view)
+		SetLocalOption("autoclose","true",CurView())
 	end
 	currentSnippet = nil
 end
