@@ -462,6 +462,13 @@ function Insert(name)
 	EnsureSnippets()
 	local curSn = snippets[name]
 	if curSn then
+	
+		if GetOption("autoclose")==true then
+			-- Disable autoclose during snippet edit, it conflicts
+			autoclose=true
+			SetLocalOption("autoclose","false",v)
+		end
+
 		currentSnippet = curSn:clone()
 		currentSnippet.view = v
 
@@ -492,11 +499,6 @@ function Insert(name)
 			end
 		else
 			currentSnippet:focusNext()
-		end
-		if GetOption("autoclose")==true then
-			-- Disable autoclose during snippet edit, it conflicts
-			autoclose=true
-			SetLocalOption("autoclose","false",v)
 		end
 	else
 		messenger:Message("Unknown snippet \""..name.."\"")

@@ -145,7 +145,9 @@ snippet perlx
 # HTML
 
 snippet text
-	<input id="${1:id}" type="text" name="${2:name}" value="$in{'${2}'}" class="${3:form}" size="${4:10}" onfocus="${5:this.value=delCommas(this.value);}" onkeypress="return validate(this,'${6:type}','${7:options}',event);" onblur="validate2(this,'${6}','${7}');" />
+	<input type="text" name="${1:name}" value="$in{'${1:name}'}" class="${2:form}" size="${3:10}" onfocus="${4:this.value=delCommas(this.value);}" onkeypress="return validate(this,'${5:type}','${6:options}',event);" onblur="validate2(this,'${5:type}','${6:options}');" />
+snippet textid
+	<input id="${1:id}" type="text" name="${2:name}" value="$in{'${2:name}'}" class="${3:form}" size="${4:10}" onfocus="${5:this.value=delCommas(this.value);}" onkeypress="return validate(this,'${6:type}','${7:options}',event);" onblur="validate2(this,'${6:type}','${7:options}');" />
 snippet submit
 	<input id="${1:sx}" type="submit" name="${2:x}" value="${3:Guardar}" class="${4:form}" onclick="return valida_forma();" />
 snippet table
@@ -176,9 +178,9 @@ snippet iframe
 snippet label
 	<label for="${1:id}">${2:nombre}</label>
 snippet hidden
-	<input type="hidden" name="${1:name}" value="${2}" />
+	<input type="hidden" name="${1:name}" value="${2:value}" />
 snippet button
-	<input type="button" name="${1:name}" value="${2}" />
+	<input type="button" name="${1:name}" value="${2:value}" />
 snippet file
 	<input type="file" id="" name="${1:name}" value="" class="form" accept="${2:.pdf,.xsl,.xlsx}" />
 snippet ul
@@ -188,19 +190,27 @@ snippet ul
 snippet li
 	<li>${1:etiqueta}</li>
 snippet textarea
-	<textarea  id="" name="${1:name}" rows="${2:4}" cols="${3:60}" class="form"></textarea>
+	<textarea name="${1:name}" rows="${2:4}" cols="${3:60}" class="form"></textarea>
+snippet textareaid
+	<textarea id="${1:taid}" name="${2:name}" rows="${3:4}" cols="${4:60}" class="form"></textarea>
 snippet check
 	<input type="checkbox" name="${1:name}" value="${2:0}"/>
-snippet radio
-	<input type="radio" name="${1:name}" value="${2:0}"/>
+snippet checkid
+	<input type="checkbox" id="${1:id}" name="${2:name}" value="${3:0}"/>
 snippet checkl
 	<input type="checkbox" name="${1:name}" value="${2:0}" id="${3:chk0}"/><label for="${3}">${4:etiqueta}</label>
+snippet radio
+	<input type="radio" name="${1:name}" value="${2:0}"/>
+snippet radioid
+	<input type="radio" id="${1:id}" name="${2:name}" value="${3:0}"/>
 snippet radiol
 	<input type="radio" name="${1:name}" value="${2:0}" id="${3:rd0}"/><label for="${3}">${4:etiqueta}</label>
 snippet date
-	<input type="text" name="${1:fi}" value="${2:$in{'${1}'}}" class="form wdate" maxlength="10" size="10" readonly><a href="javascript: void(0);" onclick="displayCalendar(document.Forma.${1});"><img src="/images/cal.png" class="vam"></a>
+	<input type="text" name="${1:fi}" value="$in{'${1:fi}'}" class="form wdate" maxlength="10" size="10" readonly><a href="javascript: void(0);" onclick="displayCalendar(document.Forma.${1:fi});"><img src="/images/cal.png" class="vam"></a>
 snippet select
-	<select name="${1:name}" class="form" onchage="" id="">${2:opt}</select>
+	<select name="${1:name}" class="form">${2:opt}</select>
+snippet selectid
+	<select id="${1:id}" name="${2:name}" class="form" onchange="${3:jsfunc}">${4:opt}</select>
 snippet opt
 	<option value="${1: }">${2:label}</option>${3:opt}
 
@@ -210,13 +220,13 @@ snippet script
 	${1: }
 	</script>
 snippet jsfunc
-	function ${1:function_name}(${2}) {
+	function ${1:function_name}(${2:v}) {
 		${3:var}
 	}
 snippet jsmessage
-	setMessage("${1}");
+	setMessage("${1:message}");
 snippet jsalert
-	alert("${1}");
+	alert("${1:alert}");
 # try
 snippet jstry
 	try {
