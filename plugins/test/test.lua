@@ -4,7 +4,7 @@ VERSION="1.0.0"
 myapp = nil
 
 function application()
-	myapp = GetPluginApp()
+	myapp = PluginGetApp()
 	if myapp == nil  then
 		return
 	end
@@ -34,7 +34,7 @@ function application()
 
 	f:AddWindowButton("OK"," Ok button ","ok",width-16, height-1,nil,"","test.ButtonFinish")
 	
-	RunPluginApp(myapp)
+	PluginRunApp(myapp)
 end
 
 function ButtonFinish(name, value, event, when, x, y)
@@ -49,12 +49,13 @@ function ButtonFinish(name, value, event, when, x, y)
 	for k,v in pairs(values) do
 		messenger:AddLog(k .. ":" .. v)
 	end
-	StopPluginApp(myapp)
+	PluginStopApp(myapp)
 	myapp = nil
 end
 
 function Load()
 	BindKey("F24", "test.application")
+	PluginAddIcon("😀","test.application")
 end
 
 Load()
