@@ -47,6 +47,22 @@
   ]
 },
 {
+  "Name": "test",
+  "Author": "hanspr",
+  "Filetype": "",
+  "Description": "Application test plugin",
+  "Tags": ["application","test"],
+  "Versions": [
+    {
+      "Version": "1.0.0",
+      "Url": "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/test.zip",
+      "Require": {
+        "micro": ">=1.1.0"
+      }
+    }
+  ]
+},
+{
   "Name": "snippets",
   "Author": "hanspr",
   "Filetype": "*",
