@@ -4,6 +4,19 @@ local curFileType = ""
 local snippets = {}
 local currentSnippet = nil
 local autoclose = false
+local writesettings = false
+
+if GetPluginOption("snippets","version") == nil then
+	AddPluginOption("snippets","version", VERSION)
+	writesettings = true
+elseif GetPluginOption("snippets","version") ~= VERSION then
+	SetPluginOption("snippets","version", VERSION)
+	writesettings = true
+end
+
+if writesettings then
+	WritePluginSettings("snippets")
+end
 
 local Location = {}
 Location.__index = Location

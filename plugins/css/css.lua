@@ -1,6 +1,21 @@
 
 VERSION="1.0.0"
 
+local writesettings = false
+
+if GetPluginOption("css","version") == nil then
+	AddPluginOption("css","version", VERSION)
+	writesettings = true
+elseif GetPluginOption("css","version") ~= VERSION then
+	SetPluginOption("css","version", VERSION)
+	writesettings = true
+end
+
+if writesettings then
+	WritePluginSettings("css")
+end
+
+
 function compress(view)
     CurView():Save(false)
     local handle = io.popen("perl ~/.config/micro-ide/plugins/css/compress.pl '" .. CurView().Buf.Path .. "'")
@@ -34,3 +49,4 @@ end
 function onOpen(view)
     onDisplayFocus(view)
 end
+

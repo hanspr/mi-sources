@@ -2,12 +2,28 @@
 VERSION = "1.0.0"
 
 local ErrorView = nil
+local writesettings = false
+
+if GetPluginOption("go","version") == nil then
+	AddPluginOption("go","version", VERSION)
+	writesettings = true
+elseif GetPluginOption("go","version") ~= VERSION then
+	SetPluginOption("go","version", VERSION)
+	writesettings = true
+end
 
 if GetPluginOption("go","goimports") == nil then
     AddPluginOption("go","goimports", false)
+	writesettings = true
 end
+
 if GetPluginOption("go","gofmt") == nil then
     AddPluginOption("go","gofmt", true)
+	writesettings = true
+end
+
+if writesettings then
+	WritePluginSettings("go")
 end
 
 MakeCommand("goimports", "go.goimports", 0)

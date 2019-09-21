@@ -1,7 +1,25 @@
 
 VERSION="1.0.0"
 
-myapp = nil
+local myapp = nil
+local writesettings = false
+
+-- INIT PLUGIN
+
+if GetPluginOption("test","version") == nil then
+	AddPluginOption("test","version", VERSION)
+	writesettings = true
+elseif GetPluginOption("test","version") ~= VERSION then
+	SetPluginOption("test","version", VERSION)
+	writesettings = true
+end
+
+if writesettings then
+	WritePluginSettings("test")
+end
+
+-- END INIT
+
 
 function application()
 	myapp = PluginGetApp()
@@ -52,6 +70,8 @@ function ButtonFinish(name, value, event, when, x, y)
 	PluginStopApp(myapp)
 	myapp = nil
 end
+
+-- Start your plugin
 
 function Load()
 	BindKey("F24", "test.application")

@@ -4,13 +4,28 @@ VERSION = "1.0.0"
 local ErrorView = nil
 local curLoc = {}
 local addcomma = false
+local writesettings = false
 
 if GetPluginOption("perl","perlsyntaxstrict") == nil then
 	AddPluginOption("perl","perlsyntaxstrict", false)
+	writesettings = true
 end
 
 if GetPluginOption("perl","addcomma") == nil then
 	AddPluginOption("perl","addcomma", true)
+	writesettings = true
+end
+
+if GetPluginOption("perl","version") == nil then
+	AddPluginOption("perl","version", VERSION)
+	writesettings = true
+elseif GetPluginOption("perl","version") ~= VERSION then
+	SetPluginOption("perl","version", VERSION)
+	writesettings = true
+end
+
+if writesettings then
+	WritePluginSettings("perl")
 end
 
 function preQuit(view)
