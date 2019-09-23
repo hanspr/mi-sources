@@ -209,14 +209,14 @@ function onRune(char,view)
 	lchar = utf8sub(line,-1)
 	if lchar==";" then
 		lchar = utf8sub(line,-2,-1)
-		if lchar=="{;" or (lchar=="};" and char ~= ";") or lchar=="(;" or lchar==",;" or lchar==";;" then
+		if string.find(lchar,"[%{%(,;%}>];$") then
 			line = utf8sub(line,1,-2)
 			view.Buf:Replace(lstart,lend,line)
 			view.Cursor:GotoLoc(cloc)
 		end
 		return true
 	end
-	if lchar=="{" or lchar=="}" or lchar=="(" or lchar=="," or lchar==";" then 
+	if string.find(lchar,"[%{%(,;%}>]$") then
 		return true
 	end
 	line = line .. ";"
