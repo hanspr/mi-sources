@@ -28,18 +28,7 @@ end
 
 MakeCommand("goimports", "go.goimports", 0)
 MakeCommand("gofmt", "go.gofmt", 0)
-
-function onDisplayFocus(view)
-    AddRuntimeFile("go", "help", "help/go-plugin.md")
-end
-
-function onViewOpen(view)
-    onDisplayFocus(view)
-end
-
-function onOpen(view)
-    onDisplayFocus(view)
-end
+AddRuntimeFile("go", "help", "help/go-plugin.md")
 
 function onSave(view)
     if GetPluginOption("go","goimports") then

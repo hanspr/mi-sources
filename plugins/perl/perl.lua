@@ -46,7 +46,7 @@ function formatbuffer(view)
 	if CurView().Buf.IsModified == true then
 		CurView():Save(false)
 	end
-    local handle = io.popen("perl ~/.config/micro-ide/plugins/perl/formatbuffer.pl '" .. CurView().Buf.Path .. "'")
+    local handle = io.popen("perl ~/.config/mi-ide/plugins/perl/formatbuffer.pl '" .. CurView().Buf.Path .. "'")
     local result = handle:read("*a")
     handle:close()
     CurView().Buf.IsModified=false
@@ -100,7 +100,7 @@ end
 function perlCheck(view,fpath)
     local ps = 0
 	local pcheck
-	
+
 	if GetPluginOption("perl","perlsyntaxstrict") == true then
 		msg,err=ExecCommand("perl","-cw","-Mstrict",fpath)
 		pcheck = "Strict"

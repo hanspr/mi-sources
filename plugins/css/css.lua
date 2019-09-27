@@ -18,7 +18,7 @@ end
 
 function compress(view)
     CurView():Save(false)
-    local handle = io.popen("perl ~/.config/micro-ide/plugins/css/compress.pl '" .. CurView().Buf.Path .. "'")
+    local handle = io.popen("perl ~/.config/mi-ide/plugins/css/compress.pl '" .. CurView().Buf.Path .. "'")
     local result = handle:read("*a")
     handle:close()
 
@@ -28,7 +28,7 @@ end
 
 function decompress(view)
     CurView():Save(false)
-    local handle = io.popen("perl ~/.config/micro-ide/plugins/css/decompress.pl '" .. CurView().Buf.Path .. "'")
+    local handle = io.popen("perl ~/.config/mi-ide/plugins/css/decompress.pl '" .. CurView().Buf.Path .. "'")
     local result = handle:read("*a")
     handle:close()
 
