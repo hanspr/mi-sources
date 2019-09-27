@@ -19,3 +19,27 @@ snippet fori
 	for ${1:i},${2:v} in ipairs(${3:table_name}) do
 	   ${0:-- body}
 	end
+
+# Snippets mi-ide plugin
+
+snippet mioptget
+	GetPluginOption("${1:plugin}","${2:option}")
+snippet mioptset
+	SetPluginOption("${1:plugin}","${2:option}")
+snippet mioptadd
+	AddPluginOption("${1:plugin}","${2:option}")
+snippet mioptwrite
+	WritePluginSettings("${1:plugin}")
+snippet mivcurr
+	CurView()
+snippet mirveopen
+	CurView():ReOpen()
+snippet mimsg
+	messenger:Message("${1:my message}")
+snippet milog
+	messenger:AddLog("${1:my message}")
+snippet micgoloc
+	view.Cursor:GotoLoc(${1:loc})
+snippet micgetloc
+	view.Cursor.Loc
+
