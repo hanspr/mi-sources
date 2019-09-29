@@ -28,6 +28,8 @@ if writesettings then
 	WritePluginSettings("perl")
 end
 
+AddRuntimeFile("perl", "help", "help/perl-plugin.md")
+
 function preQuit(view)
     if ErrorView ~= nil  then
         ErrorView:Quit(false)

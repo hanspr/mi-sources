@@ -15,6 +15,7 @@ if writesettings then
 	WritePluginSettings("css")
 end
 
+AddRuntimeFile("css", "help", "help/css-plugin.md")
 
 function compress(view)
     CurView():Save(false)
