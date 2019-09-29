@@ -1,5 +1,7 @@
 # Mi IDE default resourses
 
+If you do not know about mi-ide, visit : https://github.com/hanspr/mi-ide
+
 ## If you want to translate mi-ide
 
 You may find the translation file in your config directory under : langs
