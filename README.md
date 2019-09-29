@@ -16,19 +16,19 @@ Or download the current one from this repository
 - Copy your file or update the current translation in the langs directory
 - Create a pull request
 
-## If wnat to fix or add more syntax files or colorschemes
+## If want to fix or add more syntax files or colorschemes
 
 - Clone : https://github.com/hanspr/mi-sources
 - Copy your file or update the .mciro or yaml file
 - Create a pull request
 - **Currently, syntax and colorschme files are not included in the plugin manager to download**
 
-## If wnat to contribute a plugin
+## If want to contribute a plugin
 
 - Create your own repo
 - Copy the the xml file : https://github.com/hanspr/mi-sources/blob/master/plugins/repo.json
 - Edit the content using your information and location
 - Go to : https://github.com/hanspr/mi-channel
-- Clone the plugins.repo
+- Clone the repository
 - Add the url to your repo.json file
-
+- Submit a pull request
