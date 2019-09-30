@@ -19,6 +19,8 @@ The plugin provides the following commands:
  snippetcancel | removes all the current snippet                      | Alt+D
  snippetaccept | finishes the snippet editing for the current snippet | Alt+A
 
+* Type : `Ctrl-E snippetinsert` and `Tab` or partial name and `Tab` to list available snippets for the particular language
+
 ## Snippet Files
 
 The snippet files have a very simple syntax:
