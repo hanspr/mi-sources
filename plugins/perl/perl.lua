@@ -156,7 +156,7 @@ function perlCheck(view,fpath)
 	else
 	    if ErrorView ~= nil then
 	        ErrorView:Quit(false)
-	        if curLoc.Y ~= -1 then
+	        if curLoc.Y ~= -1 and curLoc.Y ~= CurView().Cursor.Loc.Y then
 			    view.Cursor:GotoLoc(curLoc)
 			    curLoc.Y = -1
 	        end
@@ -204,6 +204,9 @@ function onRune(char,view)
 	lstart.X=0
 	lstart.Y=xy.Y
 	line = view.Buf:Line(xy.Y)
+	if string.find(line,"^[ \t]*#") then
+		return true
+	end
 	l=utf8len(line)
 	lend = {}
 	lend.X=l
