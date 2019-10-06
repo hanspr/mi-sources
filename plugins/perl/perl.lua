@@ -35,7 +35,6 @@ end
 function setperlstrict()
 	BindKey("F12", "perl.togglestrict")
 	BindKey("F11", "perl.formatbuffer")
-	BindKey("F9", "perl.togglecommas")
 end
 
 function formatbuffer(view)
