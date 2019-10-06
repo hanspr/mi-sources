@@ -3,16 +3,10 @@ VERSION = "1.0.0"
 
 local ErrorView = nil
 local curLoc = {}
-local addcomma = false
 local writesettings = false
 
 if GetPluginOption("perl","perlsyntaxstrict") == nil then
 	AddPluginOption("perl","perlsyntaxstrict", false)
-	writesettings = true
-end
-
-if GetPluginOption("perl","addcomma") == nil then
-	AddPluginOption("perl","addcomma", true)
 	writesettings = true
 end
 
@@ -53,39 +47,6 @@ function formatbuffer(view)
     handle:close()
     CurView().Buf.IsModified=false
     CurView():ReOpen()
-end
-
-function togglecommas()
-	local view = CurView()
-	if GetPluginOption("perl","addcomma") == true then
-		SetPluginOption("perl","addcomma",false)
-		addcomma = false
-		messenger:Message("addcomma = false")
-		xy = view.Cursor.Loc
-		cloc={}
-		cloc.X=xy.X
-		cloc.Y=xy.Y
-		lstart = {}
-		lstart.X=0
-		lstart.Y=xy.Y
-		line = view.Buf:Line(xy.Y)
-		l=utf8len(line)
-		lend = {}
-		lend.X=l
-		lend.Y=xy.Y
-		lchar = utf8sub(line,-1)
-		if lchar==";" then
-			line = utf8sub(line,1,-2)
-			view.Buf:Replace(lstart,lend,line)
-			view.Cursor:GotoLoc(cloc)
-		end
-	else
-		SetPluginOption("perl","addcomma",true)
-		messenger:Message("addcomma = true")
-		addcomma = true
-		onRune("",view)
-	end
-	WritePluginSettings("perl")
 end
 
 function togglestrict()
@@ -179,7 +140,6 @@ function onDisplayFocus(view)
 end
 
 function onViewOpen(view)
-	addcomma = GetPluginOption("perl","addcomma")
     onDisplayFocus(view)
 end
 
@@ -190,46 +150,6 @@ function onBackspace(view)
 	if view.Buf:Line(view.Cursor.Loc.Y)==";" then
 		view:Delete(false)
 	end
-end
-
-function onRune(char,view)
-	if addcomma==false then
-		return true
-	end
-	xy = view.Cursor.Loc
-	cloc={}
-	cloc.X=xy.X
-	cloc.Y=xy.Y
-	lstart = {}
-	lstart.X=0
-	lstart.Y=xy.Y
-	line = view.Buf:Line(xy.Y)
-	if string.find(line,"^[ \t]*#") then
-		return true
-	end
-	l=utf8len(line)
-	lend = {}
-	lend.X=l
-	lend.Y=xy.Y
-	lchar = utf8sub(line,-1)
-	if lchar==";" then
-		lchar = utf8sub(line,-2,-1)
---		if string.find(lchar,"[%{%(,;%}>];$") then
-		if string.find(lchar,"[%{%(,;>];$") then
-			line = utf8sub(line,1,-2)
-			view.Buf:Replace(lstart,lend,line)
-			view.Cursor:GotoLoc(cloc)
-		end
-		return true
-	end
---	if string.find(lchar,"[%{%(,;%}>]$") then
-	if string.find(lchar,"[%{%(,;>]$") then
-		return true
-	end
-	line = line .. ";"
-	view.Buf:Replace(lstart,lend,line)
-	view.Cursor:GotoLoc(cloc)
-	return true
 end
 
 
