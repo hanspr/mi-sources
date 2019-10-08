@@ -35,6 +35,17 @@ end
 function setperlstrict()
 	BindKey("F12", "perl.togglestrict")
 	BindKey("F11", "perl.formatbuffer")
+	BindKey("CtrlJ", "perl.addcomma")
+	BindKey("AltEnter", "perl.addcomma")
+end
+
+function addcomma()
+	view = CurView()
+	view.Cursor:End()
+	curLoc.X = view.Cursor.Loc.X
+	curLoc.Y = view.Cursor.Loc.Y
+	view.Buf:Insert(curLoc, ";")
+	view:InsertNewline(false)
 end
 
 function formatbuffer(view)
