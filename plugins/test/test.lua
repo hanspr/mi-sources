@@ -48,7 +48,7 @@ function application()
 	f:AddWindowCheckBox("like","TV","Tv",20,6,false,nil,"def","")
 	f:AddWindowCheckBox("like","Games","Gm",20,7,false,nil,"def","")
 
-	f:AddWindowSelect("sh","Favorite super hero: ","Antman","Antman|Batman|Catwoman|Iron man|Superman|Thor|Zorro",22,2,0,1,nil,"def","")
+	f:AddWindowSelect("sh","{green}Favorite{/green} super {red}hero{/red}: ","Antman","Antman|Batman|Catwoman|Iron man|Superman|Thor|Zorro",22,2,0,1,nil,"def","")
 
 	f:AddWindowButton("OK"," Ok button ","ok",width-16, height-1,nil,"","test.ButtonFinish")
 	
