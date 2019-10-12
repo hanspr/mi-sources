@@ -78,7 +78,7 @@ function perlCheck(view,fpath)
 		msg,err=ExecCommand("perl","-cw","-Mstrict",fpath)
 		pcheck = "Strict"
 	else
-		msg,err=ExecCommand("perl","-c",fpath)
+		msg,err=ExecCommand("perl","-cX",fpath)
 		pcheck = "Dirty"
 	end
 	if err ~= nil or string.find(msg,"line") ~= nil then
