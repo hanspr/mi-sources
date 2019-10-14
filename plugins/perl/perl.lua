@@ -10,6 +10,11 @@ if GetPluginOption("perl","perlsyntaxstrict") == nil then
 	writesettings = true
 end
 
+if GetPluginOption("perl","perlsyntax") == nil then
+	AddPluginOption("perl","perlsyntax", true)
+	writesettings = true
+end
+
 if GetPluginOption("perl","version") == nil then
 	AddPluginOption("perl","version", VERSION)
 	writesettings = true
@@ -35,6 +40,7 @@ end
 function setperlstrict()
 	BindKey("F12", "perl.togglestrict")
 	BindKey("F11", "perl.formatbuffer")
+	BindKey("F10", "perl.perlsyntaxoff")
 	BindKey("CtrlJ", "perl.addcomma")
 	BindKey("AltEnter", "perl.addcomma")
 end
@@ -70,10 +76,24 @@ function togglestrict()
 	WritePluginSettings("perl")
 end
 
+function perlsyntaxoff()
+	if GetPluginOption("perl","perlsyntax") == true then
+		messenger:Message("perl syntax off")
+		SetPluginOption("perl","perlsyntax",false)
+	else
+		messenger:Message("perl syntax on")
+		SetPluginOption("perl","perlsyntax",true)
+	end
+	WritePluginSettings("perl")
+end
+
 function perlCheck(view,fpath)
     local ps = 0
 	local pcheck
 
+	if GetPluginOption("perl","perlsyntax") == false then
+		return true
+	end
 	if GetPluginOption("perl","perlsyntaxstrict") == true then
 		msg,err=ExecCommand("perl","-cw","-Mstrict",fpath)
 		pcheck = "Strict"
