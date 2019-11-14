@@ -1,6 +1,6 @@
 {
     "ftype": "perl",
-    "perlsyntax": false,
-    "perlsyntaxstrict": true,
+    "perlsyntax": true,
+    "perlsyntaxstrict": false,
     "version": "1.0.0"
 }
