@@ -30,11 +30,11 @@ end
 AddRuntimeFile("perl", "help", "help/perl-plugin.md")
 
 function preQuit(view)
-    if ErrorView ~= nil  then
-        ErrorView:Quit(false)
-        ErrorView = nil
-        return false
-    end
+	if ErrorView ~= nil  then
+		ErrorView:Quit(false)
+		ErrorView = nil
+		return false
+	end
 end
 
 function setperlstrict()
@@ -58,11 +58,17 @@ function formatbuffer(view)
 	if CurView().Buf.IsModified == true then
 		CurView():Save(false)
 	end
-    local handle = io.popen("perl ~/.config/mi-ide/plugins/perl/formatbuffer.pl '" .. CurView().Buf.Path .. "'")
-    local result = handle:read("*a")
-    handle:close()
-    CurView().Buf.IsModified=false
-    CurView():ReOpen()
+	local spc = "0"
+	local num = "0"
+	if (GetOption("indentchar") == " ") then
+		spc = "1";
+		num = GetOption("tabsize")
+	end
+	local handle = io.popen("perl ~/.config/mi-ide/plugins/perl/formatbuffer.pl '" .. CurView().Buf.Path .. "' " .. spc .. " " .. num)
+	local result = handle:read("*a")
+	handle:close()
+	CurView().Buf.IsModified=false
+	CurView():ReOpen()
 end
 
 function togglestrict()
@@ -88,7 +94,7 @@ function perlsyntaxoff()
 end
 
 function perlCheck(view,fpath)
-    local ps = 0
+	local ps = 0
 	local pcheck
 
 	if GetPluginOption("perl","perlsyntax") == false then
@@ -103,28 +109,28 @@ function perlCheck(view,fpath)
 	end
 	if err ~= nil or string.find(msg,"line") ~= nil then
 --		messenger:Error(msg)
-        if ErrorView == nil then
-        	curLoc.X = view.Cursor.Loc.X
-        	curLoc.Y = view.Cursor.Loc.Y
-            view:HSplitIndex(NewBuffer(msg, "Error"), 1)
-            ErrorView = CurView()
-            ErrorView.Type.Kind=2
-            ErrorView.Type.Readonly = true
-            ErrorView.Type.Scratch = true
-            SetLocalOption("softwrap", "true", ErrorView)
-            SetLocalOption("ruler", "false", ErrorView)
-            SetLocalOption("autosave", "false", ErrorView)
-            SetLocalOption("statusline", "false", ErrorView)
-            SetLocalOption("scrollbar", "false", ErrorView)
-            ps = 1
-        else
-            ErrorView.Buf:remove({0,0},ErrorView.Buf:End())
-            ErrorView.Buf:insert({0,0},msg)
-        end
-        ErrorView.Cursor:GotoLoc({0,0})
+		if ErrorView == nil then
+			curLoc.X = view.Cursor.Loc.X
+			curLoc.Y = view.Cursor.Loc.Y
+			view:HSplitIndex(NewBuffer(msg, "Error"), 1)
+			ErrorView = CurView()
+			ErrorView.Type.Kind=2
+			ErrorView.Type.Readonly = true
+			ErrorView.Type.Scratch = true
+			SetLocalOption("softwrap", "true", ErrorView)
+			SetLocalOption("ruler", "false", ErrorView)
+			SetLocalOption("autosave", "false", ErrorView)
+			SetLocalOption("statusline", "false", ErrorView)
+			SetLocalOption("scrollbar", "false", ErrorView)
+			ps = 1
+		else
+			ErrorView.Buf:remove({0,0},ErrorView.Buf:End())
+			ErrorView.Buf:insert({0,0},msg)
+		end
+		ErrorView.Cursor:GotoLoc({0,0})
 		if ps==1 then
-		    view:PreviousSplit(false)
-	    end
+			view:PreviousSplit(false)
+		end
 		local xy={}
 		xy.X = 0
 		xy.Y = -99
@@ -145,15 +151,15 @@ function perlCheck(view,fpath)
 		messenger:Error("Syntax Error")
 		return false
 	else
-	    if ErrorView ~= nil then
-	        ErrorView:Quit(false)
-	        if curLoc.Y ~= -1 and curLoc.Y ~= CurView().Cursor.Loc.Y then
-			    view.Cursor:GotoLoc(curLoc)
-			    curLoc.Y = -1
-	        end
+		if ErrorView ~= nil then
+			ErrorView:Quit(false)
+			if curLoc.Y ~= -1 and curLoc.Y ~= CurView().Cursor.Loc.Y then
+				view.Cursor:GotoLoc(curLoc)
+				curLoc.Y = -1
+			end
 			view:Center(false)
-	    end
-        ErrorView = nil
+		end
+		ErrorView = nil
 	end
 	messenger:Success(msg .. " (" .. pcheck .. ")")
 	return true
@@ -170,7 +176,7 @@ function onDisplayFocus(view)
 end
 
 function onViewOpen(view)
-    onDisplayFocus(view)
+	onDisplayFocus(view)
 end
 
 -- Insert ; at the end of lines to avoid typing it
