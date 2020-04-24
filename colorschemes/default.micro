@@ -1,5 +1,5 @@
 #color-link default "#F8F8F2"
-color-link comment "italic #767676"
+color-link comment "#767676"
 color-link type.keyword "#FBA1A1"
 color-link type.keyword1 "bold #FBA1A1"
 color-link identifier "#FBA1A1"
