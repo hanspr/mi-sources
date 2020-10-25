@@ -96,6 +96,7 @@ end
 function perlCheck(view,fpath)
 	local ps = 0
 	local pcheck
+	local scheck
 
 	if GetPluginOption("perl","perlsyntax") == false then
 		return true
@@ -108,6 +109,17 @@ function perlCheck(view,fpath)
 		pcheck = "Dirty"
 	end
 	if err ~= nil or string.find(msg,"line") ~= nil then
+		if pcheck == "Strict" then
+			scheck = "error"
+		elseif string.find(msg,"syntax OK") ~= nil then
+			scheck = "ok"
+		else
+			scheck = "error"
+		end
+	else
+		scheck = "ok"
+	end
+	if scheck ~= "ok" then
 --		messenger:Error(msg)
 		if ErrorView == nil then
 			curLoc.X = view.Cursor.Loc.X
