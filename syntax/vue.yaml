@@ -31,14 +31,14 @@ rules:
     - default:
         start: "<script.*?>"
         end: "</script.*?>"
-        limit-group: symbol.tag
+        limit-group: type
         rules:
             - include: "javascript"
 
     - default:
         start: "<style.*?>"
         end: "</style.*?>"
-        limit-group: symbol.tag
+        limit-group: type
         rules:
             - include: "css"
 
