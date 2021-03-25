@@ -42,7 +42,6 @@ function setperlstrict()
 	BindKey("F11", "perl.formatbuffer")
 	BindKey("F10", "perl.perlsyntaxoff")
 	BindKey("AltEnter", "perl.addcomma")
-	BindKey("Alt1", "perl.eol")
 end
 
 function eol()
