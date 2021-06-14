@@ -15,8 +15,7 @@ snippet if
 snippet ife
 	if (${1:test}) {
 		${2:# code}
-	}
-	else {
+	} else {
 		${3:# code}
 	}
 
@@ -24,11 +23,9 @@ snippet ife
 snippet ifee
 	if (${1:test}) {
 		${2:# code}
-	}
-	elsif (${3:test}) {
+	} elsif (${3:test}) {
 		${4:# elsif...}
-	}
-	else {
+	} else {
 		${5:# code}
 	}
 
@@ -140,8 +137,6 @@ snippet perlx
 		${1:”};
 	}
 
-
-
 # HTML
 
 snippet text
@@ -162,11 +157,9 @@ snippet td
 snippet a
 	<a href="${1:url}" onclick="">${2:liga}</a>
 snippet img
-	<img src="/images/${1:file}" title="${2:titulo}" />
+	<img src="/images/${1:file}" title="${2:titulo}">
 snippet div
-	<div id="${1: }">
-	${2: }
-	</div>
+	<div id="${1: }">${2: }</div>
 snippet h1
 	<h1>${1: }</h1>
 snippet h2
@@ -184,9 +177,7 @@ snippet button
 snippet file
 	<input type="file" id="" name="${1:name}" value="" class="form" accept="${2:.pdf,.xsl,.xlsx}" />
 snippet ul
-	<ul>
-	<li>${1:etiqueta}</li>
-	</ul>
+	<ul><li>${1:etiqueta}</li></ul>
 snippet li
 	<li>${1:etiqueta}</li>
 snippet textarea
@@ -208,17 +199,17 @@ snippet radiol
 snippet date
 	<input type="text" name="${1:fi}" value="$in{'${1:fi}'}" class="form wdate" maxlength="10" size="10" readonly><a href="javascript: void(0);" onclick="displayCalendar(document.Forma.${1:fi});"><img src="/images/cal.png" class="vam"></a>
 snippet select
-	<select name="${1:name}" class="form">${2:opt}</select>
+	<select name="${1:name}" class="form">${2:}</select>
 snippet selectid
-	<select id="${1:id}" name="${2:name}" class="form" onchange="${3:jsfunc}">${4:opt}</select>
+	<select id="${1:id}" name="${2:name}" class="form" onchange="${3:jsfunc}">${4:}</select>
 snippet opt
-	<option value="${1: }">${2:label}</option>${3:opt}
+	<option value="${1: }">${2:label}</option>${3:}
+snippet br
+	<br>
 
 # JS
 snippet script
-	<script>
-	${1: }
-	</script>
+	<script>${1: }</script>
 snippet jsfunc
 	function ${1:function_name}(${2:v}) {
 		${3:var}
@@ -254,5 +245,3 @@ snippet jsencode
 snippet gcal
 	<link rel="stylesheet" type="text/css" href="/css/gcalendar.css">
 	<script src="/lib/gcalendar.js"></script>
-
-
