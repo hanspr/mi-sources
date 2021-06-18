@@ -7,15 +7,15 @@ snippet xslt
 	</xsl:template>
 	</xsl:stylesheet>
 snippet template
-	<xsl:template match="${1:xpath}">${0}</xsl:template>
+	<xsl:template match="${1:xpath}">${0: }</xsl:template>
 snippet current
-	<xsl:for-each select="current()/${1:xpath}">${0}</xsl:for-each>
+	<xsl:for-each select="current()/${1:xpath}">${0: }</xsl:for-each>
 snippet var
 	<xsl:variable name="${1:varname}" select="${2:xpath}" />
 snippet var2
-	<xsl:variable name="${1:varname}">${0}</xsl:variable>
+	<xsl:variable name="${1:varname}">${0: }</xsl:variable>
 snippet if
-	<xsl:if test="${1:test}">${0}</xsl:if>
+	<xsl:if test="${1:test}">${0: }</xsl:if>
 snippet choose
 	<xsl:choose>
 	<xsl:when test="${0: }"></xsl:when>
