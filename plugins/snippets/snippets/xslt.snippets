@@ -28,6 +28,8 @@ snippet foreach
 	</xsl:for-each>
 snippet select
 	<xsl:value-of select="${1:xpath}/@${2:value}"/>
+snippet nbsp
+	<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
 snippet cnt
 	[CNT:${1:conf}¡${2:label}]
 snippet code
