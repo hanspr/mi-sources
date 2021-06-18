@@ -18,7 +18,7 @@ snippet if
 	<xsl:if test="${1:test}">${0}</xsl:if>
 snippet choose
 	<xsl:choose>
-	<xsl:when test="${0}"></xsl:when>
+	<xsl:when test="${0: }"></xsl:when>
 	<xsl:when test="test"></xsl:when>
 	<xsl:otherwise></xsl:otherwise>
 	</xsl:choose>
