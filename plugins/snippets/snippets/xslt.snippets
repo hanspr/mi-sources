@@ -3,7 +3,7 @@ snippet xslt
 	<xsl:stylesheet version = "1.0">
 	<xsl:output method = "html" />
 	<xsl:template match="${1:xpath}">
-	${0}
+	${0: }
 	</xsl:template>
 	</xsl:stylesheet>
 snippet template
@@ -51,26 +51,26 @@ snippet tasa
 snippet br
 	<br/>
 snippet h1
-	<h1>${0}</h1>
+	<h1>${0: }</h1>
 snippet h2
-	<h2>${0}</h2>
+	<h2>${0: }</h2>
 snippet h3
-	<h3>${0}</h3>
+	<h3>${0: }</h3>
 snippet h4
-	<h4>${0}</h4>
+	<h4>${0: }</h4>
 snippet h5
-	<h5>${0}</h5>
+	<h5>${0: }</h5>
 snippet h6
-	<h6>${0}</h6>
+	<h6>${0: }</h6>
 snippet hr
 	<hr />
 snippet pre
-	<pre>${0}</pre>
+	<pre>${0: }</pre>
 snippet span
 	<span>${0}</span>
 snippet table
-	<table border="0" cellspacing="0" cellpadding="2" class="fw">${0}</table>
+	<table border="0" cellspacing="0" cellpadding="2" class="fw">${0: }</table>
 snippet tr
-	<tr class="${1: }">${0}</tr>
+	<tr class="${1: }">${0: }</tr>
 snippet td
 	<td>${0: }</td>
