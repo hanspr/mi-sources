@@ -31,21 +31,21 @@ snippet select
 snippet nbsp
 	<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
 snippet cnt
-	[CNT:${1:conf}¡${2: label}]
+	[CNT:${1:conf}!${2: label}]
 snippet cod
-	[COD:<xsl:value-of select="${1:xpath/@value}"/>¡${2: table}¡${3:  value column}¡${4:   search column}]
+	[COD:<xsl:value-of select="${1:xpath/@value}"/>!${2:table}!${3:value column}!${4:search column}]
 snippet set
-	[SET:${1:s,logosa,letra,factura}¡<xsl:value-of select="${2: xpath/@value}"/>]
+	[SET:${1:s,logosa,letra,factura}!<xsl:value-of select="${2:xpath/@value}"/>]
 snippet qry
-	[QRY:${1:value}¡${2: table}¡${3: where}]
+	[QRY:${1:value}!${2:table}!${3:where}]
 snippet date
-	[DATE:<xsl:value-of select="${2:xpath/@value}"/>¡${1: NT,vacio}]
+	[DATE:<xsl:value-of select="${2:xpath/@value}"/>!${1:NT,vacio}]
 snippet dec
-	[DEC:<xsl:value-of select="${1:xpath/@value}"/>¡${2: D,X,cantidad decimales}]
+	[DEC:<xsl:value-of select="${1:xpath/@value}"/>!${2:D,X,cantidad decimales}]
 snippet del
-	[DEL:<xsl:value-of select="${1:xpath/@value}"/>¡regex]
+	[DEL:<xsl:value-of select="${1:xpath/@value}"/>!regex]
 snippet spc
-	[SPC:<xsl:value-of select="${1:xpath/@value}"/>¡regex]
+	[SPC:<xsl:value-of select="${1:xpath/@value}"/>!regex]
 snippet tasa
 	[TASA:<xsl:value-of select="${1:xpath/@value}"/>]
 snippet br

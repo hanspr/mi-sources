@@ -43,8 +43,7 @@ function Location.offset(self)
 
 		local val = loc.ph.value
 		if val then
---			add = add + val:len()
-			add = add + utf8len(val)
+			add = add + val:len()
 		end
 	end
 	return self.idx+add
@@ -367,7 +366,7 @@ function Insert(name)
 	EnsureSnippets()
 	local curSn = snippets[name]
 	if curSn then
-	
+
 		if GetOption("autoclose")==true then
 			-- Disable autoclose during snippet edit, it conflicts
 			autoclose=true
