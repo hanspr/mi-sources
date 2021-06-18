@@ -1,0 +1,48 @@
+# xml declaration
+snippet xslt
+	<xsl:stylesheet version = "1.0">
+	<xsl:output method = "html" />
+	<xsl:template match="${1:xpath}">
+	${0}
+	</xsl:template>
+	</xsl:stylesheet>
+snippet template
+	<xsl:template match="${1:xpath}">${0}</xsl:template>
+snippet current
+	<xsl:for-each select="current()/${1:xpath}">${0}</xsl:for-each>
+snippet var
+	<xsl:variable name="${1:varname}" select="${2:xpath}" />
+snippet var2
+	<xsl:variable name="${1:varname}">${0}</xsl:variable>
+snippet if
+	<xsl:if test="${1:test}">${0}</xsl:if>
+snippet choose
+	<xsl:choose>
+	<xsl:when test="${0}"></xsl:when>
+	<xsl:when test="test"></xsl:when>
+	<xsl:otherwise></xsl:otherwise>
+	</xsl:choose>
+snippet foreach
+	<xsl:for-each select="${1:xpath}">
+	${0}
+	</xsl:for-each>
+snippet select
+	<xsl:value-of select="${1:xpath}/@${2:value}"/>
+snippet cnt
+	[CNT:${1:conf}¡${2:label}]
+snippet code
+	[COD:<xsl:value-of select="@${1:search value}"/>¡${2:table}¡${3:value column}¡${4:search column}]
+snippet set
+	[SET:${1:s,logosa,letra,factura}¡<xsl:value-of select="@${2:value}"/>]
+snippet qry
+	[QRY:${1:value}¡${2:table}¡${3:where}]
+snippet date
+	[DATE:<xsl:value-of select="@${2:value}"/>¡${1:NT,vacio}]
+snippet dec
+	[DEC:<xsl:value-of select="@${1:value}"/>¡${2:D,X,cantidad decimales}]
+snippet del
+	[DEL:<xsl:value-of select="@${1:value}"/>¡regex]
+snippet space
+	[SPC:<xsl:value-of select="@${1:value}"/>¡regex]
+snippet tasa
+	[TASA:<xsl:value-of select="@${1:value}"/>]
