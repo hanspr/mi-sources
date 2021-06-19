@@ -61,10 +61,7 @@ function addcomma()
 		return true
 	end
 	view.Cursor:End()
-	curLoc.X = view.Cursor.Loc.X
-	curLoc.Y = view.Cursor.Loc.Y
-	view.Buf:Insert(curLoc, ";")
-	--view.Cursor:GotoLoc(xy)
+	view.Buf:Insert(xy, ";")
 end
 
 function formatbuffer(view)
