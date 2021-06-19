@@ -5,6 +5,9 @@ local ErrorView = nil
 local curLoc = {}
 local writesettings = false
 
+curLoc.X = 0
+curLoc.Y = -1
+
 if GetPluginOption("perl","perlsyntaxstrict") == nil then
 	AddPluginOption("perl","perlsyntaxstrict", false)
 	writesettings = true
@@ -132,8 +135,10 @@ function perlCheck(view,fpath)
 	if scheck ~= "ok" then
 --		messenger:Error(msg)
 		if ErrorView == nil then
-			curLoc.X = view.Cursor.Loc.X
-			curLoc.Y = view.Cursor.Loc.Y
+			if curLoc.Y == -1 then
+				curLoc.X = view.Cursor.Loc.X
+				curLoc.Y = view.Cursor.Loc.Y
+			end
 			view:HSplitIndex(NewBuffer(msg, "Error"), 1)
 			ErrorView = CurView()
 			ErrorView.Type.Kind=2
@@ -175,13 +180,15 @@ function perlCheck(view,fpath)
 	else
 		if ErrorView ~= nil then
 			ErrorView:Quit(false)
-			if curLoc.Y ~= -1 and curLoc.Y ~= CurView().Cursor.Loc.Y then
-				view.Cursor:GotoLoc(curLoc)
-				curLoc.Y = -1
-			end
-			view:Center(false)
+			ErrorView = nil
 		end
-		ErrorView = nil
+		if curLoc.Y ~= -1 then
+			view:SetLastView()
+			view.Cursor:GotoLoc(curLoc)
+			view:Center(false)
+			view:Relocate()
+		end
+		curLoc.Y = -1
 	end
 	messenger:Success(msg .. " (" .. pcheck .. ")")
 	return true
