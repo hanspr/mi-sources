@@ -61,6 +61,8 @@ function addcomma()
 		return true
 	end
 	view.Cursor:End()
+	xy.X = view.Cursor.Loc.X
+	xy.Y = view.Cursor.Loc.Y
 	view.Buf:Insert(xy, ";")
 end
 
