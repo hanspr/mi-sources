@@ -105,9 +105,9 @@ snippet a:mail
 snippet ac
 	<a href="`@+`">${0:`@+`}</a>
 snippet abbr
-	<abbr title="${1}">${0}</abbr>
+	<abbr title="${1}">${0: }</abbr>
 snippet address
-	<address>${0}</address>
+	<address>${0: }</address>
 snippet area
 	<area shape="${1:rect}" coords="${2}" href="${3}" alt="${0}" />
 snippet area+
@@ -122,92 +122,92 @@ snippet area:p
 snippet area:r
 	<area shape="rect" coords="${1}" href="${2}" alt="${0}" />
 snippet article
-	<article>${0}</article>
+	<article>${0: }</article>
 snippet article.
-	<article class="${1}">${0}</article>
+	<article class="${1}">${0: }</article>
 snippet article#
-	<article id="${1}">${0}</article>
+	<article id="${1}">${0: }</article>
 snippet aside
-	<aside id="${1}">${0}</aside>
+	<aside id="${1}">${0: }</aside>
 snippet audio
-	<audio src="${1}>${0}</audio>
+	<audio src="${1}>${0: }</audio>
 snippet b
-	<b>${0}</b>
+	<b>${0: }</b>
 snippet base
 	<base href="${1}" target="${0}" />
 snippet blockquote
-	<blockquote>${0}</blockquote>
+	<blockquote>${0: }</blockquote>
 snippet body
-	<body>${0}</body>
+	<body>${0: }</body>
 snippet br
 	<br>
 snippet button
-	<button id="${1}" type="${2:submit}">${0}</button>
+	<button id="${1}" type="${2:submit}">${0: }</button>
 snippet submit
-	<button type="submit">${0}</button>
+	<button type="submit">${0: }</button>
 snippet reset
-	<button type="reset">${0}</button>
+	<button type="reset">${0: }</button>
 snippet canvas
-	<canvas>${0}</canvas>
+	<canvas>${0: }</canvas>
 snippet caption
-	<caption>${0}</caption>
+	<caption>${0: }</caption>
 snippet cite
-	<cite>${0}</cite>
+	<cite>${0: }</cite>
 snippet code
-	<code>${0}</code>
+	<code>${0: }</code>
 snippet datagrid
-	<datagrid>${0}</datagrid>
+	<datagrid>${0: }</datagrid>
 snippet datalist
-	<datalist>${0}</datalist>
+	<datalist>${0: }</datalist>
 snippet datatemplate
-	<datatemplate>${0}</datatemplate>
+	<datatemplate>${0: }</datatemplate>
 snippet dd
-	<dd>${0}</dd>
+	<dd>${0: }</dd>
 snippet dd.
 	<dd class="${1}">${0}</dd>
 snippet dd#
-	<dd id="${1}">${0}</dd>
+	<dd id="${1}">${0: }</dd>
 snippet del
-	<del>${0}</del>
+	<del>${0: }</del>
 snippet details
-	<details>${0}</details>
+	<details>${0: }</details>
 snippet dfn
-	<dfn>${0}</dfn>
+	<dfn>${0: }</dfn>
 snippet div
-	<div id="${1}" class="${2}">${0}</div>
+	<div id="${1}" class="${2}">${0: }</div>
 snippet dl
-	<dl>${0}</dl>
+	<dl>${0: }</dl>
 snippet dt
-	<dt>${0}</dt>
+	<dt>${0: }</dt>
 snippet dt.
-	<dt id="${1}" class="${2}">${0}</dt>
+	<dt id="${1}" class="${2}">${0: }</dt>
 snippet em
-	<em>${0}</em>
+	<em>${0: }</em>
 snippet embed
-	<embed src="${1}" type="${0}" />
+	<embed src="${1}" type="${0: }" />
 snippet footer
-	<footer id="${1}" class="${1}">${0}</footer>
+	<footer id="${1}" class="${1}">${0: }</footer>
 snippet form
-	<form id="${1}" action="${2}" method="${3:post}">${0}</form>
+	<form id="${1}" action="${2}" method="${3:post}">${0: }</form>
 snippet formenc
-	<form id="${1}" action="${2}" method="${3:post}" enctype="multipart/form-data">${0}</form>
+	<form id="${1}" action="${2}" method="${3:post}" enctype="multipart/form-data">${0: }</form>
 snippet h1
-	<h1>${0}</h1>
+	<h1>${0: }</h1>
 snippet h2
-	<h2>${0}</h2>
+	<h2>${0: }</h2>
 snippet h3
-	<h3>${0}</h3>
+	<h3>${0: }</h3>
 snippet h4
-	<h4>${0}</h4>
+	<h4>${0: }</h4>
 snippet h5
-	<h5>${0}</h5>
+	<h5>${0: }</h5>
 snippet h6
-	<h6>${0}</h6>
+	<h6>${0: }</h6>
 snippet head
 	<head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>${1:Titulo}</title>
-	${0}
+	${0: }
 	</head>
 snippet hr
 	<hr />
@@ -225,9 +225,9 @@ snippet html5
 	</body>
 	</html>
 snippet i
-	<i>${0}</i>
+	<i>${0: }</i>
 snippet iframe
-	<iframe id="${1}" class="${1}" src="${1}" frameborder="0"></iframe>
+	<iframe id="${1}" class="${2}" src="${3}" frameborder="0"></iframe>
 snippet img
 	<img id="${0}" src="${1}" alt="${2}">
 snippet input
@@ -275,13 +275,13 @@ snippet iurl
 snippet iweek
 	<input type="week" name="${1}" id="${2:$1}" value="${3}" />
 snippet ins
-	<ins>${0}</ins>
+	<ins>${0: }</ins>
 snippet kbd
-	<kbd>${0}</kbd>
+	<kbd>${0: }</kbd>
 snippet label
-	<label for="${0:$1}">${1}</label>
+	<label for="${0}">${1}</label>
 snippet li
-	<li>${0}</li>
+	<li>${0: }</li>
 snippet lia
 	<li><a href="${0:#}">${1}</a></li>
 snippet link
@@ -293,19 +293,19 @@ snippet linkfavicon
 snippet linkrss
 	<link rel="alternate" href="${1:rss.xml}" title="RSS" type="application/atom+xml" />
 snippet menu
-	<menu>${0}</menu>
+	<menu>${0: }</menu>
 snippet menuc
-	<menu type="context">${0}</menu>
+	<menu type="context">${0: }</menu>
 snippet menut
-	<menu type="toolbar">${0}</menu>
+	<menu type="toolbar">${0: }</menu>
 snippet metarefresh
 	<meta http-equiv="refresh" content="text/html;charset=UTF-8" />
 snippet metautf
 	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 snippet meter
-	<meter>${0}</meter>
+	<meter>${0: }</meter>
 snippet nav
-	<nav id="${1}" class="${2}">${0}</nav>
+	<nav id="${1}" class="${2}">${0: }</nav>
 snippet object
 	<object data="${1}" type="${2}">${3}</object>
 # Embed QT Movie
@@ -322,69 +322,69 @@ snippet movie
 	pluginspage="http://www.apple.com/quicktime/download/" />
 	</object>
 snippet ol
-	<ol>${0}</ol>
+	<ol>${0: }</ol>
 snippet opt
 	<option value="${1}">${0:$1}</option>
 snippet optgroup
-	<optgroup><option value="${1}">${2:$1}</option>opt${0}</optgroup>
+	<optgroup><option value="${1}">${2:$1}</option>opt${0: }</optgroup>
 snippet p
-	<p>${0}</p>
+	<p>${0: }</p>
 snippet param
 	<param name="${1}" value="${2}" />
 snippet pre
-	<pre>${0}</pre>
+	<pre>${0: }</pre>
 snippet progress
-	<progress>${0}</progress>
+	<progress>${0: }</progress>
 snippet q
-	<q>${0}</q>
+	<q>${0: }</q>
 snippet rp
-	<rp>${0}</rp>
+	<rp>${0: }</rp>
 snippet rt
-	<rt>${0}</rt>
+	<rt>${0: }</rt>
 snippet script
-	<script>${0}</script>
+	<script>${0: }</script>
 snippet section
-	<section id="${1}" class="${2}">${0}</section>
+	<section id="${1}" class="${2}">${0: }</section>
 snippet select
-	<select name="${1}" id="${2:$1}" class="${3:form}">${0}</select>
+	<select name="${1}" id="${2:$1}" class="${3:form}">${0: }</select>
 snippet small
-	<small>${0}</small>
+	<small>${0: }</small>
 snippet source
 	<source src="${1}" type="${2}" media="${0}" />
 snippet span
-	<span>${0}</span>
+	<span>${0: }</span>
 snippet span.
-	<span class="${1}">${0}</span>
+	<span class="${1}">${0: }</span>
 snippet span#
-	<span id="${1}">${0}</span>
+	<span id="${1}">${0: }</span>
 snippet strong
-	<strong>${0}</strong>
+	<strong>${0: }</strong>
 snippet style
-	<style type="text/css">${0}</style>
+	<style type="text/css">${0: }</style>
 snippet sub
-	<sub>${0}</sub>
+	<sub>${0: }</sub>
 snippet summary
-	<summary>${0}</summary>
+	<summary>${0: }</summary>
 snippet sup
-	<sup>${0}</sup>
+	<sup>${0: }</sup>
 snippet table
-	<table id="$1" class="${2:table0 tableb fw}">${0}</table>
+	<table id="$1" class="${2:table0 tableb fw}">${0: }</table>
 snippet tbody
-	<tbody>${0}</tbody>
+	<tbody>${0: }</tbody>
 snippet td
-	<td>${0}</td>
+	<td>${0: }</td>
 snippet textarea
 	<textarea name="${1}" id="${2:$1}" rows="${3:8}" cols="${4:40}">${5}</textarea>
 snippet tfoot
-	<tfoot>${0}</tfoot>
+	<tfoot>${0: }</tfoot>
 snippet th
-	<th class="${1}">${0}</th>
+	<th class="${1}">${0: }</th>
 snippet thead
-	<thead>${0}</thead>
+	<thead>${0: }</thead>
 snippet tr
-	<tr class="${1}">${0}</tr>
+	<tr class="${1}">${0: }</tr>
 snippet ul
-	<ul>${0}</ul>
+	<ul>${0: }</ul>
 snippet video
 	<video src="${1} height="${2}" width="${3}" preload="${5:none}" autoplay="${6:autoplay}>${7}</video>
 snippet wbr
