@@ -47,6 +47,22 @@
   ]
 },
 {
+  "Name": "xslt",
+  "Author": "hanspr",
+  "Filetype": "xslt",
+  "Description": "xslt files",
+  "Tags": ["language"],
+  "Versions": [
+    {
+      "Version": "1.0.0",
+      "Url": "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/xslt.zip",
+      "Require": {
+        "micro": ">=1.1.0"
+      }
+    }
+  ]
+},
+{
   "Name": "test",
   "Author": "hanspr",
   "Filetype": "",
