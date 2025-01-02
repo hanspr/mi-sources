@@ -4,241 +4,253 @@ VERSION = "1.0.0"
 local ErrorView = nil
 local curLoc = {}
 local writesettings = false
-local home=os.getenv("HOME")
+local home = os.getenv("HOME")
 
 curLoc.X = 0
 curLoc.Y = -1
 
-if GetPluginOption("perl","perlsyntaxstrict") == nil then
-	AddPluginOption("perl","perlsyntaxstrict", false)
-	writesettings = true
+if GetPluginOption("perl", "perlsyntaxstrict") == nil then
+    AddPluginOption("perl", "perlsyntaxstrict", false)
+    writesettings = true
 end
 
-if GetPluginOption("perl","perlsyntax") == nil then
-	AddPluginOption("perl","perlsyntax", true)
-	writesettings = true
+if GetPluginOption("perl", "perlsyntax") == nil then
+    AddPluginOption("perl", "perlsyntax", true)
+    writesettings = true
 end
 
-if GetPluginOption("perl","perltidy") == nil then
-	AddPluginOption("perl","perltidy", false)
-	writesettings = true
-else
-	if GetPluginOption("perl","perltidy") == true then
-		local msg,err=ExecCommand("which","perltidy")
-		if err ~= nil then
-			SetPluginOption("perl","perltidy",false)
-		end
-		writesettings = true
-	end
+if GetPluginOption("perl", "perltidy") == nil then
+    AddPluginOption("perl", "perltidy", false)
+    writesettings = true
+elseif GetPluginOption("perl", "perltidy") == true then
+    local msg, err = ExecCommand("which", "perltidy")
+    if err ~= nil then
+        SetPluginOption("perl", "perltidy", false)
+        writesettings = true
+    else
+        local f = io.open(home .. "/.perltidyrc", "r")
+        if f == nil then
+            SetPluginOption("perl", "perltidy", false)
+            writesettings = true
+        else
+            io.close(f)
+        end
+    end
 end
 
-if GetPluginOption("perl","version") == nil then
-	AddPluginOption("perl","version", VERSION)
-	writesettings = true
-elseif GetPluginOption("perl","version") ~= VERSION then
-	SetPluginOption("perl","version", VERSION)
-	writesettings = true
+if GetPluginOption("perl", "version") == nil then
+    AddPluginOption("perl", "version", VERSION)
+    writesettings = true
+elseif GetPluginOption("perl", "version") ~= VERSION then
+    SetPluginOption("perl", "version", VERSION)
+    writesettings = true
 end
 
 if writesettings then
-	WritePluginSettings("perl")
+    WritePluginSettings("perl")
 end
 
 AddRuntimeFile("perl", "help", "help/perl-plugin.md")
 
 function preQuit(view)
-	if ErrorView ~= nil  then
-		ErrorView:Quit(false)
-		ErrorView = nil
-		return false
-	end
+    if ErrorView ~= nil  then
+        ErrorView:Quit(false)
+        ErrorView = nil
+        return false
+    end
 end
 
 function setperlstrict()
-	BindKey("F10", "perl.toggletidy")
-	BindKey("F11", "perl.perlsyntaxoff")
-	BindKey("F12", "perl.togglestrict")
-	BindKey("AltEnter", "perl.addcomma")
+    BindKey("F10", "perl.toggletidy")
+    BindKey("F11", "perl.perlsyntaxoff")
+    BindKey("F12", "perl.togglestrict")
+    BindKey("AltEnter", "perl.addcomma")
 end
 
 function eol()
-	CurView().Cursor:End()
+    CurView().Cursor:End()
 end
 
 function addcomma()
-	view = CurView()
-	xy = {}
-	xy.X = view.Cursor.Loc.X
-	xy.Y = view.Cursor.Loc.Y
-	line = view.Buf:Line(xy.Y)
-	if string.find(line,";$") then
-		return true
-	end
-	view.Cursor:End()
-	xy.X = view.Cursor.Loc.X
-	xy.Y = view.Cursor.Loc.Y
-	view.Buf:Insert(xy, ";")
+    view = CurView()
+    xy = {}
+    xy.X = view.Cursor.Loc.X
+    xy.Y = view.Cursor.Loc.Y
+    line = view.Buf:Line(xy.Y)
+    if string.find(line, ";$") then
+        return true
+    end
+    view.Cursor:End()
+    xy.X = view.Cursor.Loc.X
+    xy.Y = view.Cursor.Loc.Y
+    view.Buf:Insert(xy, ";")
 end
 
 function togglestrict()
-	if GetPluginOption("perl","perlsyntaxstrict") == true then
-		messenger:Message("perl Dirty")
-		SetPluginOption("perl","perlsyntaxstrict",false)
-	else
-		messenger:Message("perl Strict")
-		SetPluginOption("perl","perlsyntaxstrict",true)
-	end
-	WritePluginSettings("perl")
+    if GetPluginOption("perl", "perlsyntaxstrict") == true then
+        messenger:Message("perl Dirty")
+        SetPluginOption("perl", "perlsyntaxstrict", false)
+    else
+        messenger:Message("perl Strict")
+        SetPluginOption("perl", "perlsyntaxstrict", true)
+    end
+    WritePluginSettings("perl")
 end
 
 function toggletidy()
-	if GetPluginOption("perl","perltidy") == true then
-		messenger:Message("perl tidy off")
-		SetPluginOption("perl","perltidy",false)
-	else
-		local msg,err=ExecCommand("which","perltidy")
-		if err == nil then
-			SetPluginOption("perl","perltidy",true)
-			messenger:Message("perl tidy on")
-		else
-			messenger:Message("Install perltidy")
-		end
-	end
-	WritePluginSettings("perl")
+    if GetPluginOption("perl", "perltidy") == true then
+        messenger:Message("perl tidy off")
+        SetPluginOption("perl", "perltidy", false)
+    else
+        local msg, err = ExecCommand("which", "perltidy")
+        if err == nil then
+            local f = io.open(home .. "/.perltidyrc", "r")
+            if f == nil then
+                messenger:Warning("Configure .perltidyrc to use this funtionality")
+            else
+                io.close(f)
+                SetPluginOption("perl", "perltidy", true)
+                messenger:Message("perl tidy on")
+            end
+        else
+            messenger:Message("Install perltidy")
+        end
+    end
+    WritePluginSettings("perl")
 end
 
 function perlsyntaxoff()
-	if GetPluginOption("perl","perlsyntax") == true then
-		messenger:Message("perl syntax off")
-		SetPluginOption("perl","perlsyntax",false)
-	else
-		messenger:Message("perl syntax on")
-		SetPluginOption("perl","perlsyntax",true)
-	end
-	WritePluginSettings("perl")
+    if GetPluginOption("perl", "perlsyntax") == true then
+        messenger:Message("perl syntax off")
+        SetPluginOption("perl", "perlsyntax", false)
+    else
+        messenger:Message("perl syntax on")
+        SetPluginOption("perl", "perlsyntax", true)
+    end
+    WritePluginSettings("perl")
 end
 
-function perlCheck(view,fpath)
-	local ps = 0
-	local pcheck
-	local scheck
-	local msgp
-	local msg
+function perlCheck(view, fpath)
+    local ps = 0
+    local pcheck
+    local scheck
+    local msgp
+    local msg
 
-	if GetPluginOption("perl","perlsyntax") == false then
-		return true
-	end
-	if GetPluginOption("perl","perlsyntaxstrict") == true then
-		msgp,err=ExecCommand("perl","-c","-Mstrict",fpath)
-		pcheck = "Strict"
-	else
-		msgp,err=ExecCommand("perl","-cX",fpath)
-		pcheck = "Dirty"
-	end
-	if err ~= nil or string.find(msgp,"line") ~= nil then
-		if pcheck == "Strict" then
-			scheck = "error"
-		elseif string.find(msg,"syntax OK") ~= nil then
-			scheck = "ok"
-		else
-			scheck = "error"
-		end
-	else
-		scheck = "ok"
-	end
-	if scheck ~= "ok" then
---		messenger:Error(msg)
-		if ErrorView == nil then
-			if curLoc.Y == -1 then
-				curLoc.X = view.Cursor.Loc.X
-				curLoc.Y = view.Cursor.Loc.Y
-			end
-			view:HSplitIndex(NewBuffer(msgp, "Error"), 1)
-			ErrorView = CurView()
-			ErrorView.Type.Kind=2
-			ErrorView.Type.Readonly = true
-			ErrorView.Type.Scratch = true
-			SetLocalOption("softwrap", "true", ErrorView)
-			SetLocalOption("ruler", "false", ErrorView)
-			SetLocalOption("autosave", "false", ErrorView)
-			SetLocalOption("statusline", "false", ErrorView)
-			SetLocalOption("scrollbar", "false", ErrorView)
-			ps = 1
-		else
-			ErrorView.Buf:remove({0,0},ErrorView.Buf:End())
-			ErrorView.Buf:insert({0,0},msgp)
-		end
-		ErrorView.Cursor:GotoLoc({0,0})
-		if ps==1 then
-			view:PreviousSplit(false)
-		end
-		local xy={}
-		xy.X = 0
-		xy.Y = -99
-		if string.find(msgp,"EOF") == nil then
-			for ch in string.gmatch(msgp,"line (%d+)") do
-				xy.Y = tonumber(ch)-1;
-				break
-			end
-		end
-		if xy.Y ~= -99  then
-			if xy.Y<0 then
-				xy.Y=0
-			end
-			view.Cursor:GotoLoc(xy)
-			view:Center(false)
-			view:Relocate()
-		end
-		messenger:Error("Syntax Error")
-		return false
-	else
-		if ErrorView ~= nil then
-			ErrorView:Quit(false)
-			ErrorView = nil
-		end
-		if curLoc.Y ~= -1 then
-			view:SetLastView()
-			view.Cursor:GotoLoc(curLoc)
-			view:Center(false)
-			view:Relocate()
-		end
-		curLoc.Y = -1
-	end
-	if GetPluginOption("perl","perltidy") == true then
-		-- format buffer if syntax ok
-		msg,err=ExecCommand("perltidy","-q","-b",fpath)
-		if err == nil then
-		    msg,err=ExecCommand("rm","-f",fpath .. ".bak")
-		else
-			messenger:Error("Error perltidy")
-		end
-    	CurView():ReOpen()
-	end
-	messenger:Success(msgp .. " (" .. pcheck .. ")")
-	return true
+    if GetPluginOption("perl", "perlsyntax") == false then
+        return true
+    end
+    if GetPluginOption("perl", "perlsyntaxstrict") == true then
+        msgp, err = ExecCommand("perl", "-c", "-Mstrict", fpath)
+        pcheck = "Strict"
+    else
+        msgp, err = ExecCommand("perl", "-cX", fpath)
+        pcheck = "Dirty"
+    end
+    if err ~= nil or string.find(msgp, "line") ~= nil then
+        if pcheck == "Strict" then
+            scheck = "error"
+        elseif string.find(msg, "syntax OK") ~= nil then
+            scheck = "ok"
+        else
+            scheck = "error"
+        end
+    else
+        scheck = "ok"
+    end
+    if scheck ~= "ok" then
+        --		messenger:Error(msg)
+        if ErrorView == nil then
+            if curLoc.Y == -1 then
+                curLoc.X = view.Cursor.Loc.X
+                curLoc.Y = view.Cursor.Loc.Y
+            end
+            view:HSplitIndex(NewBuffer(msgp, "Error"), 1)
+            ErrorView = CurView()
+            ErrorView.Type.Kind = 2
+            ErrorView.Type.Readonly = true
+            ErrorView.Type.Scratch = true
+            SetLocalOption("softwrap", "true", ErrorView)
+            SetLocalOption("ruler", "false", ErrorView)
+            SetLocalOption("autosave", "false", ErrorView)
+            SetLocalOption("statusline", "false", ErrorView)
+            SetLocalOption("scrollbar", "false", ErrorView)
+            ps = 1
+        else
+            ErrorView.Buf:remove({0, 0}, ErrorView.Buf:End())
+            ErrorView.Buf:insert({0, 0}, msgp)
+        end
+        ErrorView.Cursor:GotoLoc({0, 0})
+        if ps == 1 then
+            view:PreviousSplit(false)
+        end
+        local xy={}
+        xy.X = 0
+        xy.Y = -99
+        if string.find(msgp, "EOF") == nil then
+            for ch in string.gmatch(msgp, "line (%d+)") do
+                xy.Y = tonumber(ch)-1;
+                break
+            end
+        end
+        if xy.Y ~= -99  then
+            if xy.Y < 0 then
+                xy.Y = 0
+            end
+            view.Cursor:GotoLoc(xy)
+            view:Center(false)
+            view:Relocate()
+        end
+        messenger:Error("Syntax Error")
+        return false
+    else
+        if ErrorView ~= nil then
+            ErrorView:Quit(false)
+            ErrorView = nil
+        end
+        if curLoc.Y ~= -1 then
+            view:SetLastView()
+            view.Cursor:GotoLoc(curLoc)
+            view:Center(false)
+            view:Relocate()
+        end
+        curLoc.Y = -1
+    end
+    if GetPluginOption("perl", "perltidy") == true then
+        -- format buffer if syntax ok
+        msg, err = ExecCommand("perltidy", "-q", "-b", fpath)
+        if err == nil then
+            msg, err = ExecCommand("rm", "-f", fpath .. ".bak")
+        else
+            messenger:Error("Error perltidy")
+        end
+        CurView():ReOpen()
+    end
+    messenger:Success(msgp .. " (" .. pcheck .. ")")
+    return true
 end
 
 function onSave(view)
-	local fpath = CurView().Buf.Path
+    local fpath = CurView().Buf.Path
 
-	return perlCheck(view,fpath)
+    return perlCheck(view, fpath)
 end
 
 function onDisplayFocus(view)
-	setperlstrict()
+    setperlstrict()
 end
 
 function onViewOpen(view)
-	onDisplayFocus(view)
+    onDisplayFocus(view)
 end
 
 -- Insert ; at the end of lines to avoid typing it
 -- Use Alt Enter to avoid going to the end after for the new line
 
 function onBackspace(view)
-	if view.Buf:Line(view.Cursor.Loc.Y)==";" then
-		view:Delete(false)
-	end
+    if view.Buf:Line(view.Cursor.Loc.Y) == ";" then
+        view:Delete(false)
+    end
 end
 
 
