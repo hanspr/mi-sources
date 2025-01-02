@@ -36,6 +36,25 @@ end
 
 --AddRuntimeFile("xslt", "help", "help/xslt-plugin.md")
 
+function compress(view)
+    CurView():Save(false)
+    local handle = io.popen("perl ~/.config/mi-ide/plugins/xslt/compress.pl '" .. CurView().Buf.Path .. "'")
+    local result = handle:read("*a")
+    handle:close()
+
+    CurView():ReOpen()
+    CurView():Center(false)
+end
+
+function decompress(view)
+    CurView():Save(false)
+    local handle = io.popen("perl ~/.config/mi-ide/plugins/xslt/decompress.pl '" .. CurView().Buf.Path .. "'")
+    local result = handle:read("*a")
+    handle:close()
+
+    CurView():ReOpen()
+end
+
 function preQuit(view)
     if ErrorView ~= nil  then
         ErrorView:Quit(false)
@@ -141,7 +160,11 @@ function xsltCheck(view, fpath)
 end
 
 function onDisplayFocus(view)
-    BindKey("F11", "xslt.xsltsyntaxoff")
+    BindKey("F10", "xslt.xsltsyntaxoff")
+    MakeCommand("xsltcompress", "xslt.compress", 0)
+    BindKey("F11", "xslt.compress")
+    MakeCommand("xsltdecompress", "xslt.decompress", 0)
+    BindKey("F12", "xslt.decompress")
 end
 
 function onSave(view)

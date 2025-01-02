@@ -1,18 +1,18 @@
 
-VERSION="1.0.0"
+VERSION = "1.0.0"
 
 local writesettings = false
 
-if GetPluginOption("css","version") == nil then
-	AddPluginOption("css","version", VERSION)
-	writesettings = true
-elseif GetPluginOption("css","version") ~= VERSION then
-	SetPluginOption("css","version", VERSION)
-	writesettings = true
+if GetPluginOption("css", "version") == nil then
+    AddPluginOption("css", "version", VERSION)
+    writesettings = true
+elseif GetPluginOption("css", "version") ~= VERSION then
+    SetPluginOption("css", "version", VERSION)
+    writesettings = true
 end
 
 if writesettings then
-	WritePluginSettings("css")
+    WritePluginSettings("css")
 end
 
 AddRuntimeFile("css", "help", "help/css-plugin.md")
@@ -37,10 +37,10 @@ function decompress(view)
 end
 
 function onDisplayFocus(view)
-	MakeCommand("csscompress","css.compress",0)
-	BindKey("F12", "css.compress")
-	MakeCommand("cssdecompress","css.decompress",0)
-	BindKey("F11", "css.decompress")
+    MakeCommand("csscompress", "css.compress", 0)
+    BindKey("F11", "css.compress")
+    MakeCommand("cssdecompress", "css.decompress", 0)
+    BindKey("F12", "css.decompress")
 end
 
 function onViewOpen(view)
