@@ -3,6 +3,7 @@
     "autoindent": true,
     "eofnewline": false,
     "fileformat": "unix",
+    "comment": "//",
     "indentchar": "\t",
     "keepautoindent": true,
     "matchbrace": true,

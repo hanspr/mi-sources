@@ -1,0 +1,6 @@
+{
+    "tabstospaces": true,
+    "comment": "--",
+    "blockopen" : "then|do|function",
+    "blockclose" : "end|elseif|else"
+}

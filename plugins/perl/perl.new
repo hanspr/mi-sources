@@ -24,8 +24,8 @@ if GetPluginOption("perl","perltidy") == nil then
 	writesettings = true
 else
 	if GetPluginOption("perl","perltidy") == true then
-		local msg,err=ExecCommand("which","perltidy")
-		if err ~= nil then
+		local f=io.open(home.."/.perltidyrc","r")
+		if f==nil then
 			SetPluginOption("perl","perltidy",false)
 		end
 		writesettings = true
@@ -96,10 +96,11 @@ function toggletidy()
 		messenger:Message("perl tidy off")
 		SetPluginOption("perl","perltidy",false)
 	else
-		local msg,err=ExecCommand("which","perltidy")
-		if err == nil then
-			SetPluginOption("perl","perltidy",true)
+		local f=io.open(home.."/.perltidyrc","r")
+		if f~=nil then
+			io.close(f)
 			messenger:Message("perl tidy on")
+			SetPluginOption("perl","perltidy",true)
 		else
 			messenger:Message("Install perltidy")
 		end
@@ -122,20 +123,34 @@ function perlCheck(view,fpath)
 	local ps = 0
 	local pcheck
 	local scheck
-	local msgp
-	local msg
+--	local includes,err = ExecCommand("find . -maxdepth 3 -type d -not -name '.*' -printf ',-I%P' | cut -d, -f2-")
 
+--	if err ~= nil then
+		includes = ""
+--	end
+	if GetPluginOption("perl","perltidy") == true then
+		msg,err=ExecCommand("perltidy","-q","-b",fpath)
+		if err == nil then
+		    msg,err=ExecCommand("rm","-f",fpath .. ".bak")
+		else
+			messenger:Error("Error perltidy:" .. err)
+			SetPluginOption("perl","perltidy",false)
+			WritePluginSettings("perl")
+			return true
+		end
+    	CurView():ReOpen()
+	end
 	if GetPluginOption("perl","perlsyntax") == false then
 		return true
 	end
 	if GetPluginOption("perl","perlsyntaxstrict") == true then
-		msgp,err=ExecCommand("perl","-c","-Mstrict",fpath)
+		msg,err=ExecCommand("perl","-c","-Mstrict",includes,fpath)
 		pcheck = "Strict"
 	else
-		msgp,err=ExecCommand("perl","-cX",fpath)
+		msg,err=ExecCommand("perl","-cX",fpath)
 		pcheck = "Dirty"
 	end
-	if err ~= nil or string.find(msgp,"line") ~= nil then
+	if err ~= nil or string.find(msg,"line") ~= nil then
 		if pcheck == "Strict" then
 			scheck = "error"
 		elseif string.find(msg,"syntax OK") ~= nil then
@@ -153,7 +168,7 @@ function perlCheck(view,fpath)
 				curLoc.X = view.Cursor.Loc.X
 				curLoc.Y = view.Cursor.Loc.Y
 			end
-			view:HSplitIndex(NewBuffer(msgp, "Error"), 1)
+			view:HSplitIndex(NewBuffer(msg, "Error"), 1)
 			ErrorView = CurView()
 			ErrorView.Type.Kind=2
 			ErrorView.Type.Readonly = true
@@ -166,7 +181,7 @@ function perlCheck(view,fpath)
 			ps = 1
 		else
 			ErrorView.Buf:remove({0,0},ErrorView.Buf:End())
-			ErrorView.Buf:insert({0,0},msgp)
+			ErrorView.Buf:insert({0,0},msg)
 		end
 		ErrorView.Cursor:GotoLoc({0,0})
 		if ps==1 then
@@ -175,8 +190,8 @@ function perlCheck(view,fpath)
 		local xy={}
 		xy.X = 0
 		xy.Y = -99
-		if string.find(msgp,"EOF") == nil then
-			for ch in string.gmatch(msgp,"line (%d+)") do
+		if string.find(msg,"EOF") == nil then
+			for ch in string.gmatch(msg,"line (%d+)") do
 				xy.Y = tonumber(ch)-1;
 				break
 			end
@@ -204,17 +219,7 @@ function perlCheck(view,fpath)
 		end
 		curLoc.Y = -1
 	end
-	if GetPluginOption("perl","perltidy") == true then
-		-- format buffer if syntax ok
-		msg,err=ExecCommand("perltidy","-q","-b",fpath)
-		if err == nil then
-		    msg,err=ExecCommand("rm","-f",fpath .. ".bak")
-		else
-			messenger:Error("Error perltidy")
-		end
-    	CurView():ReOpen()
-	end
-	messenger:Success(msgp .. " (" .. pcheck .. ")")
+	messenger:Success(msg .. " (" .. pcheck .. ")")
 	return true
 end
 
