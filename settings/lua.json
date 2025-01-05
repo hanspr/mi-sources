@@ -1,6 +1,8 @@
 {
     "tabstospaces": true,
     "comment": "--",
-    "blockopen" : "then|do|function",
-    "blockclose" : "end|elseif|else"
+    "smartindent": true,
+    "blockopen" : "then|function| do$",
+    "blockclose" : "end",
+    "blockinter" : "else(?: if)?"
 }

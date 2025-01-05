@@ -9,51 +9,38 @@ local home = os.getenv("HOME")
 curLoc.X = 0
 curLoc.Y = -1
 
-if GetPluginOption("xslt", "checksyntax") == nil then
-    AddPluginOption("xslt", "checksyntax", false)
+if GetPluginOption("html", "htmltidy") == nil then
+    AddPluginOption("html", "htmltidy", false)
     writesettings = true
-else
-    if GetPluginOption("xslt", "checksyntax") == true then
-        local msg, err = ExecCommand("which", "xsltproc")
-        if err ~= nil then
-            SetPluginOption("xslt", "checksyntax", false)
-        end
+elseif GetPluginOption("html", "htmltidy") == true then
+    local msg, err = ExecCommand("which", "tidy")
+    if err ~= nil then
+        SetPluginOption("html", "htmltidy", false)
         writesettings = true
+    else
+        local f = io.open(home .. "/.tidyrc", "r")
+        if f == nil then
+            SetPluginOption("html", "htmltidy", false)
+            writesettings = true
+        else
+            io.close(f)
+        end
     end
 end
 
-if GetPluginOption("xslt", "version") == nil then
-    AddPluginOption("xslt", "version", VERSION)
+if GetPluginOption("html", "version") == nil then
+    AddPluginOption("html", "version", VERSION)
     writesettings = true
-elseif GetPluginOption("xslt", "version") ~= VERSION then
-    SetPluginOption("xslt", "version", VERSION)
+elseif GetPluginOption("html", "version") ~= VERSION then
+    SetPluginOption("html", "version", VERSION)
     writesettings = true
 end
 
 if writesettings then
-    WritePluginSettings("xslt")
+    WritePluginSettings("html")
 end
 
---AddRuntimeFile("xslt", "help", "help/xslt-plugin.md")
-
-function compress(view)
-    CurView():Save(false)
-    local handle = io.popen("perl ~/.config/mi-ide/plugins/xslt/compress.pl '" .. CurView().Buf.Path .. "'")
-    local result = handle:read("*a")
-    handle:close()
-
-    CurView():ReOpen()
-    CurView():Center(false)
-end
-
-function decompress(view)
-    CurView():Save(false)
-    local handle = io.popen("perl ~/.config/mi-ide/plugins/xslt/decompress.pl '" .. CurView().Buf.Path .. "'")
-    local result = handle:read("*a")
-    handle:close()
-
-    CurView():ReOpen()
-end
+--AddRuntimeFile("html", "help", "help/html-plugin.md")
 
 function preQuit(view)
     if ErrorView ~= nil  then
@@ -63,44 +50,46 @@ function preQuit(view)
     end
 end
 
-function eol()
-    CurView().Cursor:End()
-end
-
-function xsltsyntaxoff()
-    if GetPluginOption("xslt", "checksyntax") == true then
-        messenger:Message("xslt syntax off")
-        SetPluginOption("xslt", "checksyntax", false)
+function toggletidy()
+    if GetPluginOption("html", "htmltidy") == true then
+        messenger:Message("html tidy off")
+        SetPluginOption("html", "htmltidy", false)
     else
-        local msg, err = ExecCommand("which", "xsltproc")
+        local msg, err = ExecCommand("which", "tidy")
         if err == nil then
-            SetPluginOption("xslt", "checksyntax", true)
-            messenger:Message("xslt syntax on")
+            local f = io.open(home .. "/.tidyrc", "r")
+            if f == nil then
+                messenger:Warning("Configure .tidyrc to use this funtionality")
+            else
+                io.close(f)
+                SetPluginOption("html", "htmltidy", true)
+                messenger:Message("html tidy on")
+            end
         else
-            messenger:Message("Install xsltproc to test xslt syntax")
+            messenger:Message("Install tidy")
         end
     end
-    WritePluginSettings("xslt")
+    WritePluginSettings("html")
 end
 
-function xsltCheck(view, fpath)
+function htmlCheck(view, fpath)
     local ps = 0
     local pcheck
     local scheck
     local msgp
     local msg
 
-    if GetPluginOption("xslt", "checksyntax") == false then
+    if GetPluginOption("html", "htmltidy") == false then
         return true
     end
-    msgp, err = ExecCommand("xsltproc", "--noout", fpath)
-    if err ~= nil or string.find(msgp, "error") ~= nil then
+    msgp, err = ExecCommand("tidy", fpath)
+    if err ~= nil or string.find(msgp, "Warning:") ~= nil or string.find(msgp, "Error:") ~= nil then
         scheck = "error"
     else
         scheck = "ok"
+        msgp = ""
     end
     if scheck ~= "ok" then
-        --		messenger:Error(msg)
         if ErrorView == nil then
             if curLoc.Y == -1 then
                 curLoc.X = view.Cursor.Loc.X
@@ -128,9 +117,11 @@ function xsltCheck(view, fpath)
         local xy={}
         xy.X = 0
         xy.Y = -99
-        for ch in string.gmatch(msgp, "xslt:(%d+):") do
-            xy.Y = tonumber(ch)-1;
-            break
+        if string.find(msgp, "EOF") == nil then
+            for ch in string.gmatch(msgp, "line (%d+) ") do
+                xy.Y = tonumber(ch)-1;
+                break
+            end
         end
         if xy.Y ~= -99  then
             if xy.Y < 0 then
@@ -154,25 +145,23 @@ function xsltCheck(view, fpath)
             view:Relocate()
         end
         curLoc.Y = -1
+        CurView():ReOpen()
     end
-    messenger:Success("Syntax ok")
+    messenger:Success(msgp)
     return true
-end
-
-function onDisplayFocus(view)
-    BindKey("F10", "xslt.xsltsyntaxoff")
-    MakeCommand("xsltcompress", "xslt.compress", 0)
-    BindKey("F11", "xslt.compress")
-    MakeCommand("xsltdecompress", "xslt.decompress", 0)
-    BindKey("F12", "xslt.decompress")
 end
 
 function onSave(view)
     local fpath = CurView().Buf.Path
 
-    return xsltCheck(view, fpath)
+    return htmlCheck(view, fpath)
 end
 
-function onOpen(view)
-    onDisplayFocus(view)
+function onDisplayFocus(view)
+    BindKey("F10", "html.toggletidy")
 end
+
+function onViewOpen(view)
+    BindKey("F10", "html.toggletidy")
+end
+

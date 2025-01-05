@@ -1,6 +1,4 @@
 {
-    "smartindent": true,
-    "tabstospaces": true,
-    "blockopen" : "if|for|while|def",
-    "blockclose" : "elif|else"
+    "smartindent": false,
+    "tabstospaces": true
 }

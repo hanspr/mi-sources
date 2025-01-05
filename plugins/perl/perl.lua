@@ -1,5 +1,5 @@
 
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 local ErrorView = nil
 local curLoc = {}
@@ -45,6 +45,7 @@ elseif GetPluginOption("perl", "version") ~= VERSION then
     SetPluginOption("perl", "version", VERSION)
     writesettings = true
 end
+
 
 if writesettings then
     WritePluginSettings("perl")
@@ -150,7 +151,7 @@ function perlCheck(view, fpath)
     if err ~= nil or string.find(msgp, "line") ~= nil then
         if pcheck == "Strict" then
             scheck = "error"
-        elseif string.find(msg, "syntax OK") ~= nil then
+        elseif string.find(msgp, "syntax OK") ~= nil then
             scheck = "ok"
         else
             scheck = "error"
