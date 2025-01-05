@@ -132,11 +132,10 @@
       "Versions" : [
          {
             "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.1.html.zip",
+            "Require" : {
+               "miide" : ">=1.1.0"
+            },
             "Version" : "1.0.1"
-         },
-         "Require",
-         {
-            "miide" : ">=1.1.0"
          }
       ],
       "FileType" : "html",
@@ -147,11 +146,10 @@
       "Versions" : [
          {
             "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.1.javascript.zip",
+            "Require" : {
+               "miide" : ">=1.1.0"
+            },
             "Version" : "1.0.1"
-         },
-         "Require",
-         {
-            "miide" : ">=1.1.0"
          }
       ],
       "Description" : "javascript language",
