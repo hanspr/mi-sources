@@ -1,5 +1,5 @@
 
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 
 local ErrorView = nil
 local curLoc = {}
@@ -83,7 +83,7 @@ function jsCheck(view, fpath)
     local msgp
     local msg
 
-    if GetPluginOption("perl", "perlsyntax") == false then
+    if GetPluginOption("javascript", "jssyntax") == false then
         return true
     end
     msgp, err = ExecCommand("node", "--check", fpath)
@@ -157,7 +157,7 @@ function jsCheck(view, fpath)
         curLoc.Y = -1
         CurView():ReOpen()
     end
-    messenger:Success(msgp)
+    messenger:Success("Syntax ok")
     return true
 end
 
