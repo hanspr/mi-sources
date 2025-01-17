@@ -1,5 +1,5 @@
 
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 
 local ErrorView = nil
 local curLoc = {}
@@ -83,7 +83,8 @@ function htmlCheck(view, fpath)
         return true
     end
     msgp, err = ExecCommand("tidy", fpath)
-    if err ~= nil or string.find(msgp, "Warning:") ~= nil or string.find(msgp, "Error:") ~= nil then
+    messenger:AddLog(msgp)
+    if err ~= nil and (string.find(msgp, "Warning:") ~= nil or string.find(msgp, "Error:") ~= nil) then
         scheck = "error"
     else
         scheck = "ok"
