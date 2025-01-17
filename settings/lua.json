@@ -1,6 +1,6 @@
 {
     "autoclose": true,
-    "findfuncregex": "^\\s*function\\s+%word%|%word%\\s+=\\s+function[\\s\\(]",
+    "findfuncregex": "^\\s*(?:local )?function\\s+%word%|%word%\\s+=\\s+function[\\s\\(]",
     "autoindent": true,
     "blockclose": "end\\s*$",
     "blockinter": "else(?: if)?",
