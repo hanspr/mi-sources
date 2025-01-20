@@ -1,5 +1,5 @@
 
-VERSION = "1.0.2"
+VERSION = "1.0.3"
 
 local ErrorView = nil
 local curLoc = {}
@@ -103,9 +103,6 @@ function htmlCheck(view, fpath)
             ErrorView.Type.Scratch = true
             SetLocalOption("softwrap", "true", ErrorView)
             SetLocalOption("ruler", "false", ErrorView)
-            SetLocalOption("autosave", "false", ErrorView)
-            SetLocalOption("statusline", "false", ErrorView)
-            SetLocalOption("scrollbar", "false", ErrorView)
             ps = 1
         else
             ErrorView.Buf:remove({0, 0}, ErrorView.Buf:End())

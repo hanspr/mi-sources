@@ -1,5 +1,5 @@
 
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 
 local ErrorView = nil
 local writesettings = false
@@ -52,14 +52,6 @@ function gofmt(view)
             ErrorView.Type.Scratch = true
             SetLocalOption("softwrap", "true", ErrorView)
             SetLocalOption("ruler", "false", ErrorView)
-            SetLocalOption("softwrap", "true", ErrorView)
-            SetLocalOption("autosave", "false", ErrorView)
-            SetLocalOption("statusline", "false", ErrorView)
-            SetLocalOption("scrollbar", "false", ErrorView)
-            SetLocalOption("ruler", "false", ErrorView)
-            SetLocalOption("autosave", "false", ErrorView)
-            SetLocalOption("statusline", "false", ErrorView)
-            SetLocalOption("scrollbar", "false", ErrorView)
             ps = 1
         else
             local pos = ErrorView.Buf:Start()

@@ -1,7 +1,7 @@
 {
-   "perltidy" : true,
-   "version" : "1.0.2",
+   "ftype" : "perl",
    "perlsyntax" : true,
-   "perlsyntaxstrict" : true,
-   "ftype" : "perl"
+   "version" : "1.0.3",
+   "perltidy" : true,
+   "perlsyntaxstrict" : true
 }
