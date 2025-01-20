@@ -1,164 +1,171 @@
 [
    {
+      "Description" : "CSS language",
+      "Author" : "hanspr",
+      "Tags" : [
+         "language"
+      ],
       "Versions" : [
          {
-            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.0.css.zip",
             "Version" : "1.0.0",
             "Require" : {
                "miide" : ">=1.1.0"
-            }
+            },
+            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.0.css.zip"
          }
       ],
       "Name" : "css",
-      "Description" : "CSS language",
-      "Filetype" : "css",
-      "Author" : "hanspr",
+      "Filetype" : "css"
+   },
+   {
+      "Filetype" : "go",
+      "Name" : "go",
+      "Versions" : [
+         {
+            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.0.go.zip",
+            "Require" : {
+               "miide" : ">=1.1.0"
+            },
+            "Version" : "1.0.0"
+         },
+         {
+            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.1.go.zip",
+            "Require" : {
+               "miide" : ">=1.1.0"
+            },
+            "Version" : "1.0.1"
+         }
+      ],
       "Tags" : [
          "language"
-      ]
+      ],
+      "Author" : "hanspr",
+      "Description" : "Go language"
    },
    {
       "Author" : "hanspr",
       "Tags" : [
          "language"
       ],
-      "Filetype" : "go",
-      "Description" : "Go language",
-      "Name" : "go",
+      "Description" : "Perl language",
+      "Name" : "perl",
+      "Filetype" : "perl",
       "Versions" : [
          {
-            "Require" : {
-               "miide" : ">=1.1.0"
-            },
             "Version" : "1.0.0",
-            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.0.go.zip"
-         },
-         {
-            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.1.go.zip",
-            "Version" : "1.0.1",
+            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.0.perl.zip",
             "Require" : {
                "miide" : ">=1.1.0"
             }
+         },
+         {
+            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.1.perl.zip",
+            "Require" : {
+               "miide" : ">=1.1.0"
+            },
+            "Version" : "1.0.1"
+         },
+         {
+            "Version" : "1.0.2",
+            "Require" : {
+               "miide" : ">=1.1.0"
+            },
+            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.2.perl.zip"
          }
       ]
    },
    {
-      "Description" : "Perl language",
-      "Tags" : [
-         "language"
-      ],
-      "Author" : "hanspr",
-      "Filetype" : "perl",
-      "Name" : "perl",
+      "Name" : "xslt",
+      "Filetype" : "xslt",
       "Versions" : [
          {
+            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.0.xslt.zip",
             "Require" : {
                "miide" : ">=1.1.0"
             },
-            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.0.perl.zip",
             "Version" : "1.0.0"
          },
          {
             "Version" : "1.0.1",
-            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.1.perl.zip",
             "Require" : {
                "miide" : ">=1.1.0"
-            }
+            },
+            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.1.xslt.zip"
          }
-      ]
-   },
-   {
+      ],
       "Author" : "hanspr",
       "Tags" : [
          "language"
       ],
-      "Filetype" : "xslt",
-      "Description" : "xslt files",
-      "Name" : "xslt",
-      "Versions" : [
-         {
-            "Version" : "1.0.0",
-            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.0.xslt.zip",
-            "Require" : {
-               "miide" : ">=1.1.0"
-            }
-         },
-         {
-            "Require" : {
-               "miide" : ">=1.1.0"
-            },
-            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.1.xslt.zip",
-            "Version" : "1.0.1"
-         }
-      ]
+      "Description" : "xslt files"
    },
    {
-      "Name" : "test",
-      "Versions" : [
-         {
-            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.0.test.zip",
-            "Version" : "1.0.0",
-            "Require" : {
-               "miide" : ">=1.1.0"
-            }
-         }
-      ],
+      "Description" : "Application test plugin",
+      "Author" : "hanspr",
       "Tags" : [
          "application",
          "test"
       ],
-      "Filetype" : "",
-      "Author" : "hanspr",
-      "Description" : "Application test plugin"
+      "Versions" : [
+         {
+            "Version" : "1.0.0",
+            "Require" : {
+               "miide" : ">=1.1.0"
+            },
+            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.0.test.zip"
+         }
+      ],
+      "Name" : "test",
+      "Filetype" : ""
    },
    {
+      "Author" : "hanspr",
+      "Tags" : [
+         "language"
+      ],
+      "Description" : "html language",
       "Name" : "html",
       "Versions" : [
          {
             "Version" : "1.0.1",
-            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.1.html.zip",
-            "Require" : {
-               "miide" : ">=1.1.0"
-            }
-         },
-         {
             "Require" : {
                "miide" : ">=1.1.0"
             },
+            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.1.html.zip"
+         },
+         {
+            "Version" : "1.0.2",
             "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.2.html.zip",
-            "Version" : "1.0.2"
+            "Require" : {
+               "miide" : ">=1.1.0"
+            }
          }
       ],
-      "Description" : "html language",
-      "FileType" : "html",
-      "Author" : "hanspr",
-      "Tags" : [
-         "language"
-      ]
+      "FileType" : "html"
    },
    {
+      "Name" : "javascript",
       "Versions" : [
          {
-            "Version" : "1.0.1",
             "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.1.javascript.zip",
             "Require" : {
                "miide" : ">=1.1.0"
-            }
+            },
+            "Version" : "1.0.1"
          },
          {
-            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.2.javascript.zip",
             "Version" : "1.0.2",
             "Require" : {
                "miide" : ">=1.1.0"
-            }
+            },
+            "Url" : "https://raw.githubusercontent.com/hanspr/mi-sources/master/plugins/download/1.0.2.javascript.zip"
          }
       ],
-      "Name" : "javascript",
-      "Description" : "javascript language",
       "Tags" : [
          "language"
       ],
-      "Author" : "hanspr",
-      "FileType" : "javascript"
+      "Description" : "javascript language",
+      "FileType" : "javascript",
+      "Author" : "hanspr"
    }
 ]
