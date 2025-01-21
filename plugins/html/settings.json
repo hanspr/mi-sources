@@ -1,6 +1,6 @@
 {
-   "version" : "1.0.3",
-   "checksyntax" : false,
    "htmltidy" : true,
+   "checksyntax" : false,
+   "version" : "1.0.4",
    "ftype" : "html"
 }

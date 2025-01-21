@@ -1,7 +1,7 @@
 
-VERSION = "1.0.2"
+VERSION = "1.0.3"
 
-local ErrorView = nil
+local curLoc = {}
 local writesettings = false
 
 if GetPluginOption("go", "version") == nil then
@@ -44,19 +44,14 @@ function gofmt(view)
 
     msg, err = ExecCommand("gofmt", "-e", CurView().Buf.Path)
     if err ~= nil then
-        if ErrorView == nil then
-            view:HSplitIndex(NewBuffer(msg, "Error"), 1)
-            ErrorView = CurView()
-            ErrorView.Type.Kind = 2
-            ErrorView.Type.Readonly = true
-            ErrorView.Type.Scratch = true
-            SetLocalOption("softwrap", "true", ErrorView)
-            SetLocalOption("ruler", "false", ErrorView)
+        if view:GetHelperView() == nil then
+            curLoc.X = view.Cursor.Loc.X
+            curLoc.Y = view.Cursor.Loc.Y
             ps = 1
-        else
-            local pos = ErrorView.Buf:Start()
-            ErrorView.Buf:deleteToEnd(pos)
-            ErrorView.Buf:insert(pos, msg)
+        end
+        view:OpenHelperView("h", "", msg)
+        if ps == 1 then
+            view:PreviousSplit(false)
         end
         local xy={}
         xy.X = 0
@@ -69,18 +64,21 @@ function gofmt(view)
             if xy.Y < 0 then
                 xy.Y = 0
             end
-            if ps == 1 then
-                view:PreviousSplit(false)
-            end
             view.Cursor:GotoLoc(xy)
         end
         messenger:Error("Syntax Error")
         return false
     else
-        if ErrorView ~= nil then
-            ErrorView:Quit(false)
+        if view:GetHelperView() ~= nil then
+            view:CloseHelperView()
         end
-        ErrorView = nil
+        if curLoc.Y ~= -1 then
+            view:SetLastView()
+            view.Cursor:GotoLoc(curLoc)
+            view:Center(false)
+            view:Relocate()
+        end
+        curLoc.Y = -1
         CurView():Save(false)
         local handle = io.popen("gofmt -w " .. CurView().Buf.Path)
         local result = handle:read("*a")

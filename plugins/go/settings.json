@@ -1,6 +1,6 @@
 {
+   "version" : "1.0.3",
    "ftype" : "go",
-   "version" : "1.0.2",
    "gofmt" : true,
    "goimports" : false
 }

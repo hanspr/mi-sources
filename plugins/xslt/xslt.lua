@@ -1,7 +1,6 @@
 
-VERSION = "1.0.2"
+VERSION = "1.0.3"
 
-local ErrorView = nil
 local curLoc = {}
 local writesettings = false
 local home = os.getenv("HOME")
@@ -55,14 +54,6 @@ function decompress(view)
     CurView():ReOpen()
 end
 
-function preQuit(view)
-    if ErrorView ~= nil  then
-        ErrorView:Quit(false)
-        ErrorView = nil
-        return false
-    end
-end
-
 function eol()
     CurView().Cursor:End()
 end
@@ -101,24 +92,12 @@ function xsltCheck(view, fpath)
     end
     if scheck ~= "ok" then
         --		messenger:Error(msg)
-        if ErrorView == nil then
-            if curLoc.Y == -1 then
-                curLoc.X = view.Cursor.Loc.X
-                curLoc.Y = view.Cursor.Loc.Y
-            end
-            view:HSplitIndex(NewBuffer(msgp, "Error"), 1)
-            ErrorView = CurView()
-            ErrorView.Type.Kind = 2
-            ErrorView.Type.Readonly = true
-            ErrorView.Type.Scratch = true
-            SetLocalOption("softwrap", "true", ErrorView)
-            SetLocalOption("ruler", "false", ErrorView)
+        if view:GetHelperView() == nil then
+            curLoc.X = view.Cursor.Loc.X
+            curLoc.Y = view.Cursor.Loc.Y
             ps = 1
-        else
-            ErrorView.Buf:remove({0, 0}, ErrorView.Buf:End())
-            ErrorView.Buf:insert({0, 0}, msgp)
         end
-        ErrorView.Cursor:GotoLoc({0, 0})
+        view:OpenHelperView("h", "", msgp)
         if ps == 1 then
             view:PreviousSplit(false)
         end
@@ -140,9 +119,8 @@ function xsltCheck(view, fpath)
         messenger:Error("Syntax Error")
         return false
     else
-        if ErrorView ~= nil then
-            ErrorView:Quit(false)
-            ErrorView = nil
+        if view:GetHelperView() ~= nil then
+            view:CloseHelperView()
         end
         if curLoc.Y ~= -1 then
             view:SetLastView()
