@@ -1,8 +1,11 @@
 
-VERSION = "1.0.3"
+VERSION = "1.0.4"
 
 local curLoc = {}
 local writesettings = false
+
+curLoc.X = 0
+curLoc.Y = -1
 
 if GetPluginOption("go", "version") == nil then
     AddPluginOption("go", "version", VERSION)
