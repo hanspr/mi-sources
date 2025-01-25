@@ -2,9 +2,7 @@
 
 The go plugin provides some extra niceties for using miide with
 the Go programming language. The main thing this plugin does is
-run `gofmt` and `goimports` for you automatically. If you would also
-like automatically error linting, check out the `linter` plugin.
-The plugin also provides `gorename` functionality.
+run `gofmt` , `goimports` and `go buil` for you automatically.
 
 You can run
 
@@ -12,20 +10,25 @@ You can run
 > gofmt
 ```
 
-or
-
 ```
 > goimports
 ```
 
+```
+> gobuild <file or .>
+```
+
+If you execute `gobuild`, the build process will be executed on every
+save action from here on.
+
+If you want to stop further builds on save, run:
+
+```
+> gobuild off
+```
+
 To automatically run these when you save the file, use the following
-options:
+key bindings, to toggle on/off:
 
-* `gofmt`: run gofmt on file saved. Default value: `on`
-* `goimports`: run goimports on file saved. Default value: `off`
-
-To use `gorename`, place your cursor over the variable you would like
-to rename and enter the command `> gorename newName`.
-
-You also press F6 (the default binding) to open a prompt to rename. You
-can rebind this in your `bindings.json` file with the action `go.gorename`.
+F10: `goimports`
+F11: `gofmt`
