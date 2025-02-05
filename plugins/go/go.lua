@@ -1,9 +1,10 @@
 
-VERSION = "1.0.5"
+VERSION = "1.0.6"
 
 local curLoc = {}
 local writesettings = false
 local lastgobuild = ""
+local options = ""
 
 curLoc.X = 0
 curLoc.Y = -1
@@ -33,16 +34,15 @@ end
 MakeCommand("gobuild", "go.build", 1)
 AddRuntimeFile("go", "help", "help/go-plugin.md")
 
-function build(input)
+function build(...)
     local ps = 0
     view = CurView()
-
     if input == "off" then
         lastgobuild = ""
         return true
     end
-    lastgobuild = input
-    msg, err = ExecCommand("go", "build", input)
+    lastgobuild = arg[arg["n"]]
+    msg, err = ExecCommand("go", "build", unpack(arg))
     if err ~= nil then
         HandleError(view, msg)
         messenger:Error("Compile Error")
