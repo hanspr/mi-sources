@@ -1,9 +1,9 @@
 
-VERSION = "1.0.6"
+VERSION = "1.0.7"
 
 local curLoc = {}
 local writesettings = false
-local lastgobuild = ""
+local lastgobuild = {}
 local options = ""
 
 curLoc.X = 0
@@ -37,11 +37,11 @@ AddRuntimeFile("go", "help", "help/go-plugin.md")
 function build(...)
     local ps = 0
     view = CurView()
-    if input == "off" then
-        lastgobuild = ""
+    if arg[arg["n"]] == "off" then
+        lastgobuild = {}
         return true
     end
-    lastgobuild = arg[arg["n"]]
+    lastgobuild = arg
     msg, err = ExecCommand("go", "build", unpack(arg))
     if err ~= nil then
         HandleError(view, msg)
@@ -123,8 +123,8 @@ function onSave(view)
         if result == false then
             return false
         end
-        if lastgobuild ~= "" then
-            return build(lastgobuild)
+        if lastgobuild["n"] ~= nil then
+            return build(unpack(lastgobuild))
         end
         return result
     end
