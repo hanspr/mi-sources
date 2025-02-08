@@ -1,6 +1,6 @@
 {
+   "jssyntax" : false,
    "jstidy" : true,
-   "ftype" : "javascript",
-   "version" : "1.0.3",
-   "jssyntax" : false
+   "version" : "1.0.4",
+   "ftype" : "javascript"
 }

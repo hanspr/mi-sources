@@ -1,5 +1,5 @@
 
-VERSION = "1.0.4"
+VERSION = "1.0.5"
 
 local curLoc = {}
 local writesettings = false
@@ -53,9 +53,9 @@ end
 AddRuntimeFile("perl", "help", "help/perl-plugin.md")
 
 function setperlstrict()
-    BindKey("F10", "perl.toggletidy")
-    BindKey("F11", "perl.perlsyntaxoff")
-    BindKey("F12", "perl.togglestrict")
+    BindKey("F9", "perl.toggletidy")
+    BindKey("F10", "perl.perlsyntaxoff")
+    BindKey("F11", "perl.togglestrict")
     BindKey("AltEnter", "perl.addcomma")
 end
 

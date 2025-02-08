@@ -1,5 +1,5 @@
 
-VERSION = "1.0.3"
+VERSION = "1.0.4"
 
 local curLoc = {}
 local writesettings = false
@@ -32,8 +32,6 @@ end
 if writesettings then
     WritePluginSettings("xslt")
 end
-
---AddRuntimeFile("xslt", "help", "help/xslt-plugin.md")
 
 function compress(view)
     CurView():Save(false)

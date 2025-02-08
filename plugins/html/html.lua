@@ -1,5 +1,5 @@
 
-VERSION = "1.0.4"
+VERSION = "1.0.5"
 
 local curLoc = {}
 local writesettings = false
@@ -134,10 +134,10 @@ function onSave(view)
 end
 
 function onDisplayFocus(view)
-    BindKey("F10", "html.toggletidy")
+    BindKey("F9", "html.toggletidy")
 end
 
 function onViewOpen(view)
-    BindKey("F10", "html.toggletidy")
+    BindKey("F9", "html.toggletidy")
 end
 

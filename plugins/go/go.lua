@@ -1,5 +1,5 @@
 
-VERSION = "1.0.7"
+VERSION = "1.0.8"
 
 local curLoc = {}
 local writesettings = false
@@ -171,8 +171,8 @@ function togglegofmt()
 end
 
 function onDisplayFocus(view)
-    BindKey("F10", "go.togglegoimports")
-    BindKey("F11", "go.togglegofmt")
+    BindKey("F9", "go.togglegofmt")
+    BindKey("F12", "go.togglegoimports")
 end
 
 function onViewOpen(view)
