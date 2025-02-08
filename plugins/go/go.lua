@@ -1,5 +1,5 @@
 
-VERSION = "1.0.8"
+VERSION = "1.0.9"
 
 local curLoc = {}
 local writesettings = false
@@ -81,7 +81,7 @@ function HandleError(view, msg)
     if ps == 1 then
         view:PreviousSplit(false)
     end
-    local xy={}
+    local xy = {}
     xy.X = 0
     xy.Y = -99
     for ch in string.gmatch(msg, "(%d+):") do
@@ -170,8 +170,14 @@ function togglegofmt()
     WritePluginSettings("go")
 end
 
+function compileoff()
+    lastgobuild = {}
+    messenger:Message("compile off")
+end
+
 function onDisplayFocus(view)
     BindKey("F9", "go.togglegofmt")
+    BindKey("F10", "go.compileoff")
     BindKey("F12", "go.togglegoimports")
 end
 
