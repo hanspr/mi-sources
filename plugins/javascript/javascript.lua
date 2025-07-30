@@ -1,5 +1,5 @@
 
-VERSION = "1.0.4"
+VERSION = "1.0.5"
 
 local curLoc = {}
 local writesettings = false
@@ -64,7 +64,7 @@ function jssyntaxoff()
             SetPluginOption("javascript", "jssyntax", true)
         end
     end
-    WritePluginSettings("perl")
+    WritePluginSettings("javascript")
 end
 
 function jsCheck(view, fpath)
@@ -94,7 +94,7 @@ function jsCheck(view, fpath)
         if ps == 1 then
             view:PreviousSplit(false)
         end
-        local xy={}
+        local xy = {}
         xy.X = 0
         xy.Y = -99
         for ch in string.gmatch(msgp, ":(%d+)") do
