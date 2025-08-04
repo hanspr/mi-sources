@@ -1,5 +1,5 @@
 
-VERSION = "1.0.5"
+VERSION = "1.0.6"
 
 local curLoc = {}
 local writesettings = false
@@ -160,7 +160,7 @@ function perlCheck(view, fpath)
         if ps == 1 then
             view:PreviousSplit(false)
         end
-        local xy={}
+        local xy = {}
         xy.X = 0
         xy.Y = -99
         if string.find(msgp, "EOF") == nil then

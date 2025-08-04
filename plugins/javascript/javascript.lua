@@ -1,5 +1,5 @@
 
-VERSION = "1.0.5"
+VERSION = "1.0.6"
 
 local curLoc = {}
 local writesettings = false
@@ -186,4 +186,4 @@ if writesettings then
     WritePluginSettings("javascript")
 end
 
---AddRuntimeFile("javascript", "help", "help/js-plugin.md")
+AddRuntimeFile("javascript", "help", "help/javascript-plugin.md")
