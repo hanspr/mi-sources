@@ -1,5 +1,5 @@
 
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 local writesettings = false
 
@@ -41,6 +41,11 @@ function onDisplayFocus(view)
     BindKey("F11", "css.compress")
     MakeCommand("cssdecompress", "css.decompress", 0)
     BindKey("F12", "css.decompress")
+end
+
+function onDisplayBlur(view)
+    RemoveCommand("csscompress")
+    RemoveCommand("cssdecompress")
 end
 
 function onViewOpen(view)

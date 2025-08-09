@@ -1,5 +1,5 @@
 
-VERSION = "1.0.4"
+VERSION = "1.0.5"
 
 local curLoc = {}
 local writesettings = false
@@ -99,7 +99,7 @@ function xsltCheck(view, fpath)
         if ps == 1 then
             view:PreviousSplit(false)
         end
-        local xy={}
+        local xy = {}
         xy.X = 0
         xy.Y = -99
         for ch in string.gmatch(msgp, "xslt:(%d+):") do
@@ -138,6 +138,11 @@ function onDisplayFocus(view)
     BindKey("F11", "xslt.compress")
     MakeCommand("xsltdecompress", "xslt.decompress", 0)
     BindKey("F12", "xslt.decompress")
+end
+
+function onDisplayBlur(view)
+    RemoveCommand("xsltcompress")
+    RemoviCommand("xsltdecompress")
 end
 
 function onSave(view)

@@ -1,5 +1,5 @@
 
-VERSION = "1.0.9"
+VERSION = "1.0.10"
 
 local curLoc = {}
 local writesettings = false
@@ -31,7 +31,6 @@ if writesettings then
     WritePluginSettings("go")
 end
 
-MakeCommand("gobuild", "go.build", 1)
 AddRuntimeFile("go", "help", "help/go-plugin.md")
 
 function build(...)
@@ -179,6 +178,11 @@ function onDisplayFocus(view)
     BindKey("F9", "go.togglegofmt")
     BindKey("F10", "go.compileoff")
     BindKey("F12", "go.togglegoimports")
+    MakeCommand("gobuild", "go.build", 1)
+end
+
+function onDisplayBlur(view)
+    RemoveCommand("gobuild")
 end
 
 function onViewOpen(view)

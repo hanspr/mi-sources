@@ -1,5 +1,5 @@
 {
-    "checksyntax": true,
-    "ftype": "xslt",
-    "version": "1.0.4"
+   "checksyntax" : true,
+   "ftype" : "xslt",
+   "version" : "1.0.5"
 }
