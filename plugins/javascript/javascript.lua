@@ -1,5 +1,5 @@
 
-VERSION = "1.0.6"
+VERSION = "1.0.7"
 
 local curLoc = {}
 local writesettings = false
@@ -146,6 +146,12 @@ function onDisplayFocus(view)
     BindKey("F9", "javascript.toggletidy")
     BindKey("F10", "javascript.jssyntaxoff")
     BindKey("F11", "javascript.compress")
+end
+
+function onDisplayBlur(view)
+    BindKey("F9", "Unbindkey")
+    BindKey("F10", "Unbindkey")
+    BindKey("F11", "Unbindkey")
 end
 
 function onViewOpen(view)

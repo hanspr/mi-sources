@@ -1,5 +1,5 @@
 
-VERSION = "1.0.6"
+VERSION = "1.0.7"
 
 local curLoc = {}
 local writesettings = false
@@ -51,13 +51,6 @@ if writesettings then
 end
 
 AddRuntimeFile("perl", "help", "help/perl-plugin.md")
-
-function setperlstrict()
-    BindKey("F9", "perl.toggletidy")
-    BindKey("F10", "perl.perlsyntaxoff")
-    BindKey("F11", "perl.togglestrict")
-    BindKey("AltEnter", "perl.addcomma")
-end
 
 function eol()
     CurView().Cursor:End()
@@ -211,7 +204,17 @@ function onSave(view)
 end
 
 function onDisplayFocus(view)
-    setperlstrict()
+    BindKey("F9", "perl.toggletidy")
+    BindKey("F10", "perl.perlsyntaxoff")
+    BindKey("F11", "perl.togglestrict")
+    BindKey("AltEnter", "perl.addcomma")
+end
+
+function onDisplayBlur(view)
+    BindKey("F9", "Unbindkey")
+    BindKey("F10", "Unbindkey")
+    BindKey("F11", "Unbindkey")
+    BindKey("AltEnter", "Unbindkey")
 end
 
 function onViewOpen(view)

@@ -1,5 +1,5 @@
 
-VERSION = "1.0.5"
+VERSION = "1.0.6"
 
 local curLoc = {}
 local writesettings = false
@@ -134,13 +134,16 @@ end
 
 function onDisplayFocus(view)
     BindKey("F10", "xslt.xsltsyntaxoff")
-    MakeCommand("xsltcompress", "xslt.compress", 0)
     BindKey("F11", "xslt.compress")
-    MakeCommand("xsltdecompress", "xslt.decompress", 0)
     BindKey("F12", "xslt.decompress")
+    MakeCommand("xsltcompress", "xslt.compress", 0)
+    MakeCommand("xsltdecompress", "xslt.decompress", 0)
 end
 
 function onDisplayBlur(view)
+    BindKey("F10", "Unbindkey")
+    BindKey("F11", "Unbindkey")
+    BindKey("F12", "Unbindkey")
     RemoveCommand("xsltcompress")
     RemoviCommand("xsltdecompress")
 end

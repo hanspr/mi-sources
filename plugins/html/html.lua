@@ -1,5 +1,5 @@
 
-VERSION = "1.0.5"
+VERSION = "1.0.6"
 
 local curLoc = {}
 local writesettings = false
@@ -74,7 +74,6 @@ function htmlCheck(view, fpath)
         return true
     end
     msgp, err = ExecCommand("tidy", fpath)
-    messenger:AddLog(msgp)
     if err ~= nil and (string.find(msgp, "Warning:") ~= nil or string.find(msgp, "Error:") ~= nil) then
         scheck = "error"
     else
@@ -91,7 +90,7 @@ function htmlCheck(view, fpath)
         if ps == 1 then
             view:PreviousSplit(false)
         end
-        local xy={}
+        local xy = {}
         xy.X = 0
         xy.Y = -99
         if string.find(msgp, "EOF") == nil then
@@ -135,6 +134,10 @@ end
 
 function onDisplayFocus(view)
     BindKey("F9", "html.toggletidy")
+end
+
+function onDisplayBlur(view)
+    BindKey("F9", "Unbindkey")
 end
 
 function onViewOpen(view)

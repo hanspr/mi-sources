@@ -1,5 +1,5 @@
 
-VERSION = "1.0.10"
+VERSION = "1.0.11"
 
 local curLoc = {}
 local writesettings = false
@@ -182,6 +182,9 @@ function onDisplayFocus(view)
 end
 
 function onDisplayBlur(view)
+    BindKey("F9", "Unbindkey")
+    BindKey("F10", "Unbindkey")
+    BindKey("F12", "Unbindkey")
     RemoveCommand("gobuild")
 end
 
