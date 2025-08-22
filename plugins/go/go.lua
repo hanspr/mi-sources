@@ -1,9 +1,8 @@
 
-VERSION = "1.0.11"
+VERSION = "1.0.12"
 
 local curLoc = {}
 local writesettings = false
-local lastgobuild = {}
 local options = ""
 
 curLoc.X = 0
@@ -27,28 +26,46 @@ if GetPluginOption("go", "gofmt") == nil then
     writesettings = true
 end
 
+if GetPluginOption("go", "govet") == nil then
+    AddPluginOption("go", "govet", true)
+    writesettings = true
+end
+
+if GetPluginOption("go", "golint") == nil then
+    AddPluginOption("go", "golint", true)
+    writesettings = true
+end
+
 if writesettings then
     WritePluginSettings("go")
 end
 
 AddRuntimeFile("go", "help", "help/go-plugin.md")
 
-function build(...)
+function vet(view)
     local ps = 0
-    view = CurView()
-    if arg[arg["n"]] == "off" then
-        lastgobuild = {}
-        return true
-    end
-    lastgobuild = arg
-    msg, err = ExecCommand("go", "build", unpack(arg))
+    msg, err = ExecCommand("go", "vet")
     if err ~= nil then
         HandleError(view, msg)
-        messenger:Error("Compile Error")
+        messenger:Error("go vet Error")
         return false
     else
         HandleSuccess(view)
-        messenger:Success("Compile success")
+        messenger:Success("go vet success")
+        return true
+    end
+end
+
+function lint(view)
+    local ps = 0
+    msg, err = ExecCommand("golint", view.Buf.Path)
+    if err ~= nil or msg ~= "" then
+        HandleError(view, msg)
+        messenger:Error("golint Error")
+        return false
+    else
+        HandleSuccess(view)
+        messenger:Success("golint success")
         return true
     end
 end
@@ -83,7 +100,7 @@ function HandleError(view, msg)
     local xy = {}
     xy.X = 0
     xy.Y = -99
-    for ch in string.gmatch(msg, "(%d+):") do
+    for ch in string.gmatch(msg, ":(%d+):") do
         xy.Y = tonumber(ch)-1;
         break
     end
@@ -92,6 +109,8 @@ function HandleError(view, msg)
             xy.Y = 0
         end
         view.Cursor:GotoLoc(xy)
+        view:Center(false)
+        view:Relocate()
     end
 end
 
@@ -122,11 +141,17 @@ function onSave(view)
         if result == false then
             return false
         end
-        if lastgobuild["n"] ~= nil then
-            return build(unpack(lastgobuild))
-        end
-        return result
     end
+    if GetPluginOption("go", "golint") then
+        local result = lint(view)
+        if result == false then
+            return false
+        end
+    end
+    if GetPluginOption("go", "govet") then
+        return vet(view)
+    end
+    return true
 end
 
 function goimports()
@@ -169,23 +194,40 @@ function togglegofmt()
     WritePluginSettings("go")
 end
 
-function compileoff()
-    lastgobuild = {}
-    messenger:Message("compile off")
+function togglegovet()
+    if GetPluginOption("go", "govet") == true then
+        messenger:Message("govet off")
+        SetPluginOption("go", "govet", false)
+    else
+        messenger:Message("govet on")
+        SetPluginOption("go", "govet", true)
+    end
+    WritePluginSettings("go")
+end
+
+function togglegolint()
+    if GetPluginOption("go", "golint") == true then
+        messenger:Message("golint off")
+        SetPluginOption("go", "golint", false)
+    else
+        messenger:Message("golint on")
+        SetPluginOption("go", "golint", true)
+    end
+    WritePluginSettings("go")
 end
 
 function onDisplayFocus(view)
     BindKey("F9", "go.togglegofmt")
-    BindKey("F10", "go.compileoff")
+    BindKey("F10", "go.togglegovet")
+    BindKey("F11", "go.togglegolint")
     BindKey("F12", "go.togglegoimports")
-    MakeCommand("gobuild", "go.build", 1)
 end
 
 function onDisplayBlur(view)
     BindKey("F9", "Unbindkey")
     BindKey("F10", "Unbindkey")
+    BindKey("F11", "Unbindkey")
     BindKey("F12", "Unbindkey")
-    RemoveCommand("gobuild")
 end
 
 function onViewOpen(view)
