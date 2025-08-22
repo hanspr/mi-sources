@@ -1,5 +1,5 @@
 
-VERSION = "1.0.12"
+VERSION = "1.0.13"
 
 local curLoc = {}
 local writesettings = false
@@ -100,7 +100,10 @@ function HandleError(view, msg)
     local xy = {}
     xy.X = 0
     xy.Y = -99
-    for ch in string.gmatch(msg, ":(%d+):") do
+    local ms = string.gsub(view.Buf.Fname, "%.", "%.")
+    ms = string.gsub(ms, "%-", "%-")
+    ms = ms .. ":(%d+):"
+    for ch in string.gmatch(msg, ms) do
         xy.Y = tonumber(ch)-1;
         break
     end

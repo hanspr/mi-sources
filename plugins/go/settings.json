@@ -1,8 +1,8 @@
 {
-   "ftype" : "go",
+   "version" : "1.0.13",
+   "goimports" : true,
    "gofmt" : true,
+   "ftype" : "go",
    "govet" : true,
-   "golint" : true,
-   "version" : "1.0.12",
-   "goimports" : true
+   "golint" : true
 }
