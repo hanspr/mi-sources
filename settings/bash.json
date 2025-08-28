@@ -4,8 +4,6 @@
     "blockclose": "",
     "blockinter": "",
     "blockopen": "",
-    "charsclose": "“”°·•",
-    "charsopen": "“”°·•",
     "comment": "#",
     "eofnewline": false,
     "fileformat": "unix",
@@ -13,12 +11,12 @@
     "keepautoindent": true,
     "matchbrace": true,
     "rmtrailingws": true,
-    "smartindent": true,
+    "smartindent": false,
     "smartpaste": true,
     "softwrap": false,
     "tabindents": false,
     "tabmovement": true,
-    "tabsize": 4,
+    "tabsize": 2,
     "tabstospaces": true,
     "useformatter": true
 }

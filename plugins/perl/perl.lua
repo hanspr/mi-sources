@@ -1,5 +1,5 @@
 
-VERSION = "1.0.7"
+VERSION = "1.0.8"
 
 local curLoc = {}
 local writesettings = false
@@ -87,6 +87,10 @@ function toggletidy()
         messenger:Message("perl tidy off")
         SetPluginOption("perl", "perltidy", false)
     else
+        if GetOption("useformatter") == false then
+            messenger:Message("Formatter disabled by local option 'useformatter'")
+            return
+        end
         local msg, err = ExecCommand("which", "perltidy")
         if err == nil then
             local f = io.open(home .. "/.perltidyrc", "r")
@@ -184,7 +188,7 @@ function perlCheck(view, fpath)
         end
         curLoc.Y = -1
     end
-    if GetPluginOption("perl", "perltidy") == true then
+    if GetPluginOption("perl", "perltidy") == true and GetOption("useformatter") == true then
         msg, err = ExecCommand("perltidy", "-q", "-b", fpath)
         if err == nil then
             msg, err = ExecCommand("rm", "-f", fpath .. ".bak")
