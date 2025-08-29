@@ -1,5 +1,5 @@
 
-VERSION = "1.0.8"
+VERSION = "1.0.9"
 
 local curLoc = {}
 local writesettings = false
@@ -136,14 +136,8 @@ function perlCheck(view, fpath)
         msgp, err = ExecCommand("perl", "-cX", fpath)
         pcheck = "Dirty"
     end
-    if err ~= nil or string.find(msgp, "line") ~= nil then
-        if pcheck == "Strict" then
-            scheck = "error"
-        elseif string.find(msgp, "syntax OK") ~= nil then
-            scheck = "ok"
-        else
-            scheck = "error"
-        end
+    if string.find(msgp, "syntax OK") == nil then
+        scheck = "error"
     else
         scheck = "ok"
     end
