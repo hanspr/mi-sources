@@ -1,5 +1,5 @@
 
-VERSION = "1.0.6"
+VERSION = "1.0.7"
 
 local curLoc = {}
 local writesettings = false
@@ -145,7 +145,7 @@ function onDisplayBlur(view)
     BindKey("F11", "Unbindkey")
     BindKey("F12", "Unbindkey")
     RemoveCommand("xsltcompress")
-    RemoviCommand("xsltdecompress")
+    RemoveCommand("xsltdecompress")
 end
 
 function onSave(view)
