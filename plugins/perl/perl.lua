@@ -1,5 +1,5 @@
 
-VERSION = "1.0.10"
+VERSION = "1.0.11"
 
 local curLoc = {}
 local writesettings = false
@@ -139,7 +139,7 @@ function perlCheck(view, fpath)
     if string.find(msgp, "syntax OK") == nil then
         scheck = "error"
     else
-        if GetPluginOption("perl", "perlsyntaxstrict") == true and string.find(msgp, "WARN") ~= nil then
+        if GetPluginOption("perl", "perlsyntaxstrict") == true and string.find(msgp, "line (%d+)") ~= nil then
             messenger:AddLog(msgp)
         end
         scheck = "ok"
