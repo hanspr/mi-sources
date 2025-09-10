@@ -1,5 +1,5 @@
 
-VERSION = "1.0.13"
+VERSION = "1.0.14"
 
 local curLoc = {}
 local writesettings = false
@@ -81,6 +81,27 @@ function gofmt(view)
     else
         HandleSuccess(view)
         messenger:Success("Syntax OK")
+        return true
+    end
+end
+
+function modernize()
+    local ps = 0
+    local view = CurView()
+    msg, err = ExecCommand("modernize", "./...")
+    if err ~= nil or msg ~= "" then
+        nmsg = ""
+        for line in string.gmatch(msg, "([^\n]*)\n?") do
+            if string.find(line, view.Buf.Fname) ~= nil then
+                nmsg = nmsg .. line .. "\n"
+            end
+        end
+        if nmsg ~= "" then
+            HandleError(view, nmsg)
+        end
+        return false
+    else
+        HandleSuccess(view)
         return true
     end
 end
@@ -175,51 +196,35 @@ function split(str, sep)
     return result
 end
 
-function togglegoimports()
-    if GetPluginOption("go", "goimports") == true then
-        messenger:Message("goimports off")
-        SetPluginOption("go", "goimports", false)
+function togglegooption(option)
+    if GetPluginOption("go", option) == true then
+        messenger:Message(option .. " off")
+        SetPluginOption("go", option, false)
     else
-        messenger:Message("goimports on")
-        SetPluginOption("go", "goimports", true)
+        messenger:Message(option .. " on")
+        SetPluginOption("go", option, true)
     end
     WritePluginSettings("go")
+end
+
+function togglegoimports()
+    togglegooption("goimports")
 end
 
 function togglegofmt()
-    if GetPluginOption("go", "gofmt") == true then
-        messenger:Message("gofmt off")
-        SetPluginOption("go", "gofmt", false)
-    else
-        messenger:Message("gofmt on")
-        SetPluginOption("go", "gofmt", true)
-    end
-    WritePluginSettings("go")
+    togglegooption("gofmt")
 end
 
 function togglegovet()
-    if GetPluginOption("go", "govet") == true then
-        messenger:Message("govet off")
-        SetPluginOption("go", "govet", false)
-    else
-        messenger:Message("govet on")
-        SetPluginOption("go", "govet", true)
-    end
-    WritePluginSettings("go")
+    togglegooption("govet")
 end
 
 function togglegolint()
-    if GetPluginOption("go", "golint") == true then
-        messenger:Message("golint off")
-        SetPluginOption("go", "golint", false)
-    else
-        messenger:Message("golint on")
-        SetPluginOption("go", "golint", true)
-    end
-    WritePluginSettings("go")
+    togglegooption("golint")
 end
 
 function onDisplayFocus(view)
+    BindKey("F7", "go.modernize")
     BindKey("F9", "go.togglegofmt")
     BindKey("F10", "go.togglegovet")
     BindKey("F11", "go.togglegolint")
@@ -227,6 +232,7 @@ function onDisplayFocus(view)
 end
 
 function onDisplayBlur(view)
+    BindKey("F7", "Unbindkey")
     BindKey("F9", "Unbindkey")
     BindKey("F10", "Unbindkey")
     BindKey("F11", "Unbindkey")
