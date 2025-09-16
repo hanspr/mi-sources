@@ -1,5 +1,5 @@
 
-VERSION = "1.0.8"
+VERSION = "1.0.9"
 
 local curLoc = {}
 local writesettings = false
@@ -142,16 +142,33 @@ function onSave(view)
     return jsCheck(view, fpath)
 end
 
+function addcomma()
+    view = CurView()
+    xy = {}
+    xy.X = view.Cursor.Loc.X
+    xy.Y = view.Cursor.Loc.Y
+    line = view.Buf:Line(xy.Y)
+    if string.find(line, ";$") then
+        return true
+    end
+    view.Cursor:End()
+    xy.X = view.Cursor.Loc.X
+    xy.Y = view.Cursor.Loc.Y
+    view.Buf:Insert(xy, ";")
+end
+
 function onDisplayFocus(view)
     BindKey("F9", "javascript.toggletidy")
     BindKey("F10", "javascript.jssyntaxoff")
     BindKey("F11", "javascript.compress")
+    BindKey("AltEnter", "javascript.addcomma")
 end
 
 function onDisplayBlur(view)
     BindKey("F9", "Unbindkey")
     BindKey("F10", "Unbindkey")
     BindKey("F11", "Unbindkey")
+    BindKey("AltEnter", "Unbindkey")
 end
 
 function onViewOpen(view)
