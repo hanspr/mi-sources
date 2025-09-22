@@ -1,5 +1,5 @@
 
-VERSION = "1.0.9"
+VERSION = "1.0.10"
 
 local curLoc = {}
 local writesettings = false
@@ -114,7 +114,7 @@ function jsCheck(view, fpath)
     else
         if GetPluginOption("javascript", "jstidy") == true then
             if tidytool == "js-beautify" then
-                msgp, err = ExecCommand("js-beautify", "-r -n", fpath)
+                msgp, err = ExecCommand("js-beautify", "-r", "-n", fpath)
             elseif tidytool == "uglifyjs" then
                 msgp, err = ExecCommand("uglifyjs", fpath, "-b", "-o", fpath .. ".new")
                 msgp, err = ExecCommand("mv", "-f", fpath .. ".new", fpath)
