@@ -1,5 +1,5 @@
 
-VERSION = "1.0.15"
+VERSION = "1.0.16"
 
 local curLoc = {}
 local writesettings = false
@@ -228,7 +228,8 @@ function list(str)
     lastpkg = ""
     ostr = str
     view = CurView()
-    if str == "" then
+    if str == "" or str == nil then
+        ostr = ""
         str = "std"
     elseif string.find(str, "%.%.%.") == nil then
         str = str .. "..."
@@ -260,7 +261,7 @@ end
 function doc(str)
     ostr = str
     view = CurView()
-    if str == "" then
+    if str == "" or str == nil then
         return true
     end
     if string.find(str, "%.") == nil then
