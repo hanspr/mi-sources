@@ -1,9 +1,10 @@
 
-VERSION = "1.0.14"
+VERSION = "1.0.15"
 
 local curLoc = {}
 local writesettings = false
 local options = ""
+local lastpkg = ""
 
 curLoc.X = 0
 curLoc.Y = -1
@@ -223,7 +224,78 @@ function togglegolint()
     togglegooption("golint")
 end
 
+function list(str)
+    lastpkg = ""
+    ostr = str
+    view = CurView()
+    if str == "" then
+        str = "std"
+    elseif string.find(str, "%.%.%.") == nil then
+        str = str .. "..."
+    end
+    msg, err = ExecCommand("go", "list", str)
+    if err ~= nil then
+        msg, err = ExecCommand("go", "list", "std")
+        found_lines = {}
+        omsg = msg
+        msg = ""
+        for line in string.gmatch(omsg, "([^\n]*)\n?") do
+            if string.find(line, ostr) then
+                table.insert(found_lines, line)
+            end
+        end
+        for i, line in ipairs(found_lines) do
+            msg = msg .. line .. "\n"
+        end
+        if msg == "" then
+            messenger:Warning("No module found for word: ", ostr)
+            return false
+        end
+    end
+    view:OpenHelperView("v", "", msg)
+    view:PreviousSplit(false)
+    return true
+end
+
+function doc(str)
+    ostr = str
+    view = CurView()
+    if str == "" then
+        return true
+    end
+    if string.find(str, "%.") == nil then
+        if lastpkg ~= "" then
+            str = lastpkg .. "." .. str
+        else
+            lastpkg = str
+        end
+    else
+        for pkg in string.gmatch(str, "%.") do
+            lastpkg = pkg;
+            break
+        end
+    end
+    msg, err = ExecCommand("go", "doc", str)
+    if err ~= nil then
+        msg, err = ExecCommand("go", "doc", ostr)
+        if err ~= nil then
+            messenger:Warning("No method found for ", str, " (", ostr, ")")
+            lastpkg = ""
+            return true
+        end
+        lastpkg = ostr
+    end
+    if view:GetHelperView() ~= nil then
+        view:CloseHelperView()
+    end
+    view:OpenHelperView("v", "godoc", msg)
+    view:PreviousSplit(false)
+    return true
+end
+
 function onDisplayFocus(view)
+    MakeCommand("golist", "go.list", 0)
+    MakeCommand("godoc", "go.doc", 0)
     BindKey("F7", "go.modernize")
     BindKey("F9", "go.togglegofmt")
     BindKey("F10", "go.togglegovet")
@@ -232,6 +304,8 @@ function onDisplayFocus(view)
 end
 
 function onDisplayBlur(view)
+    RemoveCommand("golist")
+    RemoveCommand("godoc")
     BindKey("F7", "Unbindkey")
     BindKey("F9", "Unbindkey")
     BindKey("F10", "Unbindkey")
