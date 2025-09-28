@@ -1,5 +1,5 @@
 
-VERSION = "1.0.12"
+VERSION = "1.0.13"
 
 local curLoc = {}
 local writesettings = false
@@ -128,6 +128,7 @@ function perlCheck(view, fpath)
 
     if GetPluginOption("perl", "perlsyntax") == false then
         codeTidy(view, fpath)
+        messenger:Message("Syntax off")
         return true
     end
     if GetPluginOption("perl", "perlsyntaxstrict") == true then
@@ -186,8 +187,8 @@ function perlCheck(view, fpath)
         end
         curLoc.Y = -1
     end
-    messenger:Success(msgp .. " (" .. pcheck .. ")")
     codeTidy(view, fpath)
+    messenger:Success(msgp .. " (" .. pcheck .. ")")
     return true
 end
 
