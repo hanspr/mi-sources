@@ -1,5 +1,5 @@
 
-VERSION = "1.0.11"
+VERSION = "1.0.12"
 
 local curLoc = {}
 local writesettings = false
@@ -127,6 +127,7 @@ function perlCheck(view, fpath)
     local msg
 
     if GetPluginOption("perl", "perlsyntax") == false then
+        codeTidy(view, fpath)
         return true
     end
     if GetPluginOption("perl", "perlsyntaxstrict") == true then
@@ -185,17 +186,21 @@ function perlCheck(view, fpath)
         end
         curLoc.Y = -1
     end
+    messenger:Success(msgp .. " (" .. pcheck .. ")")
+    codeTidy(view, fpath)
+    return true
+end
+
+function codeTidy(view, fpath)
     if GetPluginOption("perl", "perltidy") == true and GetOption("useformatter") == true then
         msg, err = ExecCommand("perltidy", "-q", "-b", fpath)
         if err == nil then
             msg, err = ExecCommand("rm", "-f", fpath .. ".bak")
+            CurView():ReOpen()
         else
             messenger:Error("Error perltidy")
         end
-        CurView():ReOpen()
     end
-    messenger:Success(msgp .. " (" .. pcheck .. ")")
-    return true
 end
 
 function onSave(view)
