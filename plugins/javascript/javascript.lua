@@ -1,5 +1,5 @@
 
-VERSION = "1.0.10"
+VERSION = "1.0.11"
 
 local curLoc = {}
 local writesettings = false
@@ -75,6 +75,7 @@ function jsCheck(view, fpath)
     local msg
 
     if GetPluginOption("javascript", "jssyntax") == false then
+        jstidy(view, fpath)
         return true
     end
     msgp, err = ExecCommand("node", "--check", fpath)
@@ -112,14 +113,6 @@ function jsCheck(view, fpath)
         messenger:Error("Syntax Error")
         return false
     else
-        if GetPluginOption("javascript", "jstidy") == true then
-            if tidytool == "js-beautify" then
-                msgp, err = ExecCommand("js-beautify", "-r", "-n", fpath)
-            elseif tidytool == "uglifyjs" then
-                msgp, err = ExecCommand("uglifyjs", fpath, "-b", "-o", fpath .. ".new")
-                msgp, err = ExecCommand("mv", "-f", fpath .. ".new", fpath)
-            end
-        end
         if view:GetHelperView() ~= nil then
             view:CloseHelperView()
         end
@@ -130,10 +123,22 @@ function jsCheck(view, fpath)
             view:Relocate()
         end
         curLoc.Y = -1
-        CurView():ReOpen()
+        jstidy(view, fpath)
     end
     messenger:Success("Syntax ok")
     return true
+end
+
+function jstidy(view, fpath)
+    if GetPluginOption("javascript", "jstidy") == true then
+        if tidytool == "js-beautify" then
+            msgp, err = ExecCommand("js-beautify", "-r", "-n", fpath)
+        elseif tidytool == "uglifyjs" then
+            msgp, err = ExecCommand("uglifyjs", fpath, "-b", "-o", fpath .. ".new")
+            msgp, err = ExecCommand("mv", "-f", fpath .. ".new", fpath)
+        end
+        CurView():ReOpen()
+    end
 end
 
 function onSave(view)

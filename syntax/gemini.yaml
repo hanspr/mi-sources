@@ -1,22 +1,24 @@
-filetype: markdown
+filetype: gemini
 
 detect:
-    filename: "\\.(md|mkd|mkdn|markdown)$"
+    filename: "\\.gemini$"
 
 rules:
     # Tables (Github extension)
     - normal: ".*\\|.*"
 
-    - md-table: "(?:\\|.+?)+\\|"
-    - md-bold: "^\\|[^\\|]+"
     # quotes
     - method: "^[:>].+"
     - identifier.var: "^;.+"
+
+    - md-table: "(?:\\|.+?)+\\|"
+    - md-bold: "^\\|[^\\|]+"
 
       # italic
     - md-italic: "[^_\\w]_(?:.+?)_[^_\\w]"
 
       # Strong emphasis
+    - md-italic: "[^\\*_][\\*_](?:.+?)[\\*_][^\\*_]"
     - md-bold: "__(?:.+?)__"
     - md-bold: "\\*\\*(?:.+?)\\*\\*"
     - constant: "`(?:.+?)`"
@@ -47,62 +49,57 @@ rules:
 
       # urls
     - constant.string.url: "https?://[^ )>]+"
+    - constant.string: "\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\""
 
-      # mdkdocs,github
-    - info: "!!! info .*"
-    - info: "> \\[!NOTE\\]"
-    - error: "!!! danger .*"
-    - error: "> \\[!CAUTION\\]"
-    - todo: "!!! warning.*"
-    - todo: "> \\[!WARNING\\]"
-    - constant.string: "^ {3,}.*"
+    #- constant.string: "^ {3,}.*"
+    - invisible: "_+|\\*+"
+    - invisible: "`"
 
     # bloques de código
-    - label:
-        start: "^```perl$"
-        end: "^```$"
+    - statusline:
+        start: "```perl$"
+        end: "```$"
         rules:
             - default: "."
             - include: "perl"
-    - label:
-        start: "^```javascript$"
-        end: "^```$"
+    - statusline:
+        start: "```javascript$"
+        end: "```$"
         rules:
             - default: "."
             - include: "javascript"
-    - label:
-        start: "^```go$"
-        end: "^```$"
+    - statusline:
+        start: "```go$"
+        end: "```$"
         rules:
             - default: "."
             - include: "go"
-    - label:
-        start: "^```lua$"
-        end: "^```$"
+    - statusline:
+        start: "```lua$"
+        end: "```$"
         rules:
             - default: "."
             - include: "lua"
-    - label:
-        start: "^```python$"
-        end: "^```$"
+    - statusline:
+        start: "```python$"
+        end: "```$"
         rules:
             - default: "."
             - include: "python"
-    - label:
-        start: "^```html$"
-        end: "^```$"
+    - statusline:
+        start: "```html$"
+        end: "```$"
         rules:
             - default: "."
             - include: "html"
             - include: "javascript"
-    - label:
-        start: "^```(?:\\w+)$"
-        end: "^```$"
+    - statusline:
+        start: "```(?:\\w+)$"
+        end: "```$"
         rules:
             - comment: "."
     - constant:
-        start: "^```$"
-        end: "^```$"
+        start: "```$"
+        end: "```$"
         rules:
-            - comment: "."
-
+            - default: "."
