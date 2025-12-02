@@ -1,5 +1,5 @@
 
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 
 local indent = -1
 local home = os.getenv("HOME")
@@ -23,7 +23,11 @@ function preInsertNewline(view)
     xy.X = view.Cursor.Loc.X
     xy.Y = view.Cursor.Loc.Y
     line = view.Buf:Line(xy.Y)
-    if string.find(line, ":") then
+    l = utf8len(line)
+    if xy.X < l then
+        return true
+    end
+    if string.sub(line,-1) == ":" then
         indent = #GetLeadingWhitespace(line)
     end
 end
