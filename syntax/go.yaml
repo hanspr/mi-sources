@@ -36,9 +36,11 @@ rules:
     - constant.string: "\'.*?\'"
     - constant.string: "\\`.*?\\`"
     - include: "comments"
+    - comment: "^[ \\t]*//.*$"
+    - comment: "[ \\t]+//.*$"
     - label: "^[\\t ]*\\w+:$"
+    - constant.string.url: "(ftp(s)?|http(s)?|git|chrome)://[^ \\t\\'\"]+"
     - default: "^[\\t ]+"
-    - comment: "//.+$"
 
     - comment:
         start: "^\\s*/\\*"
@@ -50,5 +52,9 @@ rules:
         start: "struct {"
         end: "}"
         rules:
-            - default: "^\\s+\\w+\\b"
-            - comment: " //.+$"
+            - default: "^\\s+(\\w+(,\\s)?)+\\s"
+            - symbol.brackets: "(\\{|\\})"
+            - symbol.brackets: "(\\(|\\))"
+            - symbol.brackets: "(\\[|\\])"
+            - constant.string: "`.*?`"
+            - comment: "\\s*//.+$"

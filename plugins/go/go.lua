@@ -1,5 +1,5 @@
 
-VERSION = "1.0.16"
+VERSION = "1.0.17"
 
 local curLoc = {}
 local writesettings = false
@@ -28,12 +28,12 @@ if GetPluginOption("go", "gofmt") == nil then
 end
 
 if GetPluginOption("go", "govet") == nil then
-    AddPluginOption("go", "govet", true)
+    AddPluginOption("go", "govet", false)
     writesettings = true
 end
 
 if GetPluginOption("go", "golint") == nil then
-    AddPluginOption("go", "golint", true)
+    AddPluginOption("go", "golint", false)
     writesettings = true
 end
 
@@ -45,7 +45,17 @@ AddRuntimeFile("go", "help", "help/go-plugin.md")
 
 function vet(view)
     local ps = 0
-    msg, err = ExecCommand("go", "vet")
+    local gomod = false
+    local f = io.open("go.mod", "r")
+    if f ~= nil then
+        io.close(f)
+        gomod = true
+    end
+    if gomod then
+        msg, err = ExecCommand("go", "vet")
+    else
+        msg, err = ExecCommand("go", "vet", view.Buf.Path)
+    end
     if err ~= nil then
         HandleError(view, msg)
         messenger:Error("go vet Error")
@@ -59,7 +69,7 @@ end
 
 function lint(view)
     local ps = 0
-    msg, err = ExecCommand("golint", view.Buf.Path)
+    msg, err = ExecCommand("golangci-lint", view.Buf.Path)
     if err ~= nil or msg ~= "" then
         HandleError(view, msg)
         messenger:Error("golint Error")

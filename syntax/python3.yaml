@@ -24,7 +24,7 @@ rules:
     - method: "(?:\\w+\\.)+\\w+\\("
     - method: "]\\.\\w+\\("
       # keywords
-    - statement: "\\b(and|as|assert|break|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|nonlocal|not|or|pass|raise|return|try|while|with|yield)\\b"
+    - statement: "\\b(and|as|assert|break|case|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|match|nonlocal|not|or|pass|raise|return|try|while|with|yield)\\b"
       # parentheses
     - preproc: "@\\w+"
     - symbol.brackets: "([(){}]|\\[|\\])"
@@ -32,34 +32,39 @@ rules:
       # numbers
     - constant.number: "\\b[0-9]+\\b"
     - constant.string.char: "\\b[A-Z_][A-Z_0-9]+\\b"
+    - constant.string: "\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\""
+    - constant.string: "\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'"
+    - comment: "^[ \\t]*#.*$"
+    - comment: "[ \\t]+#.*$"
     - include: "comments"
-
-    - constant.string:
-        start: "\"\"\""
-        end: "\"\"\""
-        rules: []
 
     - comment:
         start: "'''"
         end: "'''"
         rules: []
 
-    - comment:
-        start: "#"
-        end: "$"
+    - constant.string:
+        start: "\"\"\""
+        end: "\"\"\""
         rules: []
 
     - constant.string:
-        start: "\""
-        end: "\""
-        skip: "\\\\."
-        rules:
-            - constant.specialChar: "\\\\."
-
-    - constant.string:
-        start: "'"
+        start: "f'"
         end: "'"
         skip: "\\\\."
         rules:
             - constant.specialChar: "\\\\."
+            - identifier.var: "{.+?}"
+            - constant.string: "\".+?\""
+            - symbol.brackets: "([(){}]|\\[|\\])"
+
+    - constant.string:
+        start: "f\"[^)]"
+        end: "\""
+        skip: "\\\\."
+        rules:
+            - constant.specialChar: "\\\\."
+            - identifier.var: "{.+?}"
+            - constant.string: "\'.+?\'"
+            - symbol.brackets: "([(){}]|\\[|\\])"
 
