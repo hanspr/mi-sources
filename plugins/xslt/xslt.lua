@@ -1,5 +1,5 @@
 
-VERSION = "1.0.7"
+VERSION = "1.0.8"
 
 local curLoc = {}
 local writesettings = false
@@ -83,7 +83,7 @@ function xsltCheck(view, fpath)
         return true
     end
     msgp, err = ExecCommand("xsltproc", "--noout", fpath)
-    if err ~= nil or string.find(msgp, "error") ~= nil then
+    if err ~= nil or string.find(msgp, "parse error") ~= nil then
         scheck = "error"
     else
         scheck = "ok"
