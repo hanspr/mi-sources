@@ -34,14 +34,36 @@ rules:
     - constant.string.char: "\\b[A-Z_][A-Z_0-9]+\\b"
     - constant.string: "\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\""
     - constant.string: "\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'"
-    - comment: "^[ \\t]*#.*$"
     - comment: "[ \\t]+#.*$"
-    - include: "comments"
+
+    - comment:
+        start: "^[ \\t]*#"
+        end: "$"
+        rules:
+            - info: "(?:\\w+):.*"
+            - todo: "(?i)TODO:.*"
+            - error: "(?i)FIX:.*"
 
     - comment:
         start: "'''"
         end: "'''"
         rules: []
+
+    - comment:
+        start: "f'''"
+        end: "'''"
+        rules:
+            - constant.specialChar: "\\\\."
+            - identifier.var: "{.+?}"
+            - symbol.brackets: "([(){}]|\\[|\\])"
+
+    - constant.string:
+        start: "f\"\"\""
+        end: "\"\"\""
+        rules:
+            - constant.specialChar: "\\\\."
+            - identifier.var: "{.+?}"
+            - symbol.brackets: "([(){}]|\\[|\\])"
 
     - constant.string:
         start: "\"\"\""
@@ -59,7 +81,7 @@ rules:
             - symbol.brackets: "([(){}]|\\[|\\])"
 
     - constant.string:
-        start: "f\"[^)]"
+        start: "\\bf\""
         end: "\""
         skip: "\\\\."
         rules:

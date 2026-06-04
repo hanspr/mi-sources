@@ -1,5 +1,5 @@
 
-VERSION = "1.0.19"
+VERSION = "1.0.20"
 
 local curLoc = {}
 local writesettings = false
@@ -69,7 +69,7 @@ end
 
 function lint(view)
     local ps = 0
-    msg, err = ExecCommand("golangci-lint", "run", view.Buf.Path)
+    msg, err = ExecCommand("golangci-lint", "run", "./")
     if err ~= nil then
         HandleError(view, msg)
         messenger:Error("golint Error")
