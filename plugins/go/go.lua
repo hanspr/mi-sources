@@ -1,5 +1,5 @@
 
-VERSION = "1.0.21"
+VERSION = "1.0.22"
 
 local curLoc = {}
 local writesettings = false
@@ -126,12 +126,12 @@ function HandleError(view, msg)
         curLoc.Y = view.Cursor.Loc.Y
         ps = 1
     end
-    buf = string.find(msg, view.Buf.Fname)
-    if buf == nil then
-        buf = msg:match("([^/]+%.go):")
-        if buf ~= nil then
+    fname = string.find(msg, view.Buf.Fname)
+    if fname == nil then
+        fname = msg:match("([%w%d_./-]+%.go):")
+        if fname ~= nil then
             pfile = view.Buf.Fname
-            view:Open(buf)
+            view:Open(fname)
         end
     end
     view:OpenHelperView("h", "", msg)

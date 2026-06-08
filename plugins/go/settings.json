@@ -1,9 +1,9 @@
 {
-   "golint" : true,
    "gomodernize" : false,
-   "version" : "1.0.21",
-   "ftype" : "go",
-   "gofmt" : true,
+   "golint" : true,
+   "goimports" : true,
+   "version" : "1.0.22",
    "govet" : true,
-   "goimports" : true
+   "ftype" : "go",
+   "gofmt" : true
 }
