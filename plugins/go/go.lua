@@ -1,10 +1,11 @@
 
-VERSION = "1.0.20"
+VERSION = "1.0.21"
 
 local curLoc = {}
 local writesettings = false
 local options = ""
 local lastpkg = ""
+local pfile = ""
 
 curLoc.X = 0
 curLoc.Y = -1
@@ -125,6 +126,14 @@ function HandleError(view, msg)
         curLoc.Y = view.Cursor.Loc.Y
         ps = 1
     end
+    buf = string.find(msg, view.Buf.Fname)
+    if buf == nil then
+        buf = msg:match("([^/]+%.go):")
+        if buf ~= nil then
+            pfile = view.Buf.Fname
+            view:Open(buf)
+        end
+    end
     view:OpenHelperView("h", "", msg)
     if ps == 1 then
         view:PreviousSplit(false)
@@ -152,6 +161,10 @@ end
 function HandleSuccess(view)
     if view:GetHelperView() ~= nil then
         view:CloseHelperView()
+        if pfile ~= "" then
+            view:Open(pfile)
+            pfile = ""
+        end
     end
     if curLoc.Y ~= -1 then
         view:SetLastView()

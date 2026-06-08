@@ -84,7 +84,7 @@ snippet fslurp
 #file: burp (write all from array)
 snippet fburp
 	// data is a byte array
-	err := os.WriteFile("${1:path}",[]bytes(${2:data}),0)
+	err := os.WriteFile("${1:path}",[]byte(${2:data}),0)
 #file: read by line
 snippet freadline
 	line := ""
@@ -164,3 +164,63 @@ snippet switch
 	default:
 		${0}
 	}
+#http.Client
+snippet get
+	resp, err := http.Get(${1:url})
+	if err != nil {
+		//fail action
+	}
+	defer resp.Body.Close()
+	body${2:read|encode}
+snippet getreq
+	req,err := http.NewRequest("GET",url,nil)
+	if err != nil {
+		//fail action
+	}
+	req.Header.Set("Content-Type","application/json")
+	req.Header.Set(${1:header},"${2:value}")
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		//fail action
+	}
+	defer resp.Body.Close()
+	body${3:read|encode}
+snippet post
+	jdata, err := json.Marshal(${1:data})
+	if err != nil {
+		//fail action
+	}
+	req, err := http.NewRequest("POST",${2:url},bytes.NewBuffer(jdata))
+	if err != nil {
+		//fail action
+	}
+	req.Header.Set("Content-Type","application/json")
+	req.Header.Set(${3:header},"${4:value}")
+	client := &http.Client{}
+	res,err := client.Do(req)
+	if err != nil {
+		//fail action
+	}
+	defer res.Body.Close()
+	body${5:read|encode}
+snippet bodyread
+	content, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		//fail action
+	}
+	var ${1:data} ${2:struct}
+	err = json.Unmarshal(content, &${1})
+	if err != nil {
+		//fail action
+	}
+	//success
+snippet bodyencode
+	var ${1:data} ${2:struct}
+	err = json.NewDecoder(resp.Body).Decode(&${1})
+	if err != nil {
+		//fail action
+	}
+	//success
