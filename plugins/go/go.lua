@@ -1,5 +1,5 @@
 
-VERSION = "1.0.22"
+VERSION = "1.0.23"
 
 local curLoc = {}
 local writesettings = false
@@ -130,7 +130,7 @@ function HandleError(view, msg)
     if fname == nil then
         fname = msg:match("([%w%d_./-]+%.go):")
         if fname ~= nil then
-            pfile = view.Buf.Fname
+            pfile = view.Buf.AbsPath
             view:Open(fname)
         end
     end
