@@ -1,5 +1,5 @@
 
-VERSION = "1.0.23"
+VERSION = "1.0.24"
 
 local curLoc = {}
 local writesettings = false
@@ -100,6 +100,7 @@ end
 function modernize()
     local ps = 0
     local view = CurView()
+
     msg, err = ExecCommand("modernize", "./...")
     if err ~= nil or msg ~= "" then
         nmsg = ""
@@ -190,14 +191,14 @@ function onSave(view)
             return false
         end
     end
-    if GetPluginOption("go", "golint") then
-        local result = lint(view)
+    if GetPluginOption("go", "govet") then
+        local result = vet(view)
         if result == false then
             return false
         end
     end
-    if GetPluginOption("go", "govet") then
-        return vet(view)
+    if GetPluginOption("go", "golint") then
+        return lint(view)
     end
     return true
 end
