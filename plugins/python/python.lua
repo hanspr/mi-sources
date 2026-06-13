@@ -1,10 +1,10 @@
 
-VERSION = "1.0.3"
+VERSION = "1.0.4"
 
 local indent = -1
 local home = os.getenv("HOME")
 local curLoc = {}
-
+local tool = "py_compile"
 curLoc.X = 0
 curLoc.Y = -1
 
@@ -16,13 +16,56 @@ elseif GetPluginOption("python", "version") ~= VERSION then
     writesettings = true
 end
 
+if GetPluginOption("python", "checksyntax") == nil then
+    AddPluginOption("python", "checksyntax", true)
+    writesettings = true
+end
+
 if writesettings then
     WritePluginSettings("python")
 end
 
+function syntaxoff()
+    if GetPluginOption("python", "checksyntax") == true then
+        messenger:Message("python syntax off")
+        SetPluginOption("python", "checksyntax", false)
+    else
+        messenger:Message("python syntax on, tool", tool)
+        SetPluginOption("python", "checksyntax", true)
+    end
+    WritePluginSettings("python")
+end
+
+function settool()
+    msg, err = ExecCommand("which", "pylint")
+    if err == nil then
+        tool = "pylint"
+    end
+    msg, err = ExecCommand("which", "mypy")
+    if err == nil then
+        tool = "mypy"
+    end
+    messenger:Message("lint tool:", tool)
+end
+
 function Check(view, fpath)
     local ps = 0
-    msg, err = ExecCommand("python3", "-m", "py_compile", fpath)
+    local msg, err, strerr
+    if GetPluginOption("python", "checksyntax") == false then
+        messenger:Message("Syntax off")
+        return true
+    end
+    if tool == "py_compile" then
+        strerr = "line (%d+)"
+        msg, err = ExecCommand("python3", "-m", "py_compile", fpath)
+    else
+        strerr = ":(%d+):"
+        if tool == "pylint" then
+            msg, err = ExecCommand(tool, "--disable=C,R", fpath)
+        else
+            msg, err = ExecCommand(tool, fpath)
+        end
+    end
     if err ~= nil then
         if view:GetHelperView() == nil then
             curLoc.X = view.Cursor.Loc.X
@@ -37,7 +80,7 @@ function Check(view, fpath)
         xy.X = 0
         xy.Y = -99
         if string.find(msg, "EOF") == nil then
-            for ch in string.gmatch(msg, "line (%d+)") do
+            for ch in string.gmatch(msg, strerr) do
                 xy.Y = tonumber(ch)-1;
                 break
             end
@@ -64,6 +107,7 @@ function Check(view, fpath)
         end
         curLoc.Y = -1
     end
+    messenger:Success(tool, " : syntax check ok")
 end
 
 function onSave(view)
@@ -103,3 +147,15 @@ function onInsertNewline(view)
     return true
 end
 
+function onDisplayFocus(view)
+    BindKey("F10", "python.syntaxoff")
+end
+
+function onDisplayBlur(view)
+    BindKey("F10", "Unbindkey")
+end
+
+function onViewOpen(view)
+    onDisplayFocus(view)
+    settool()
+end

@@ -1,4 +1,5 @@
 {
-   "ftype" : "python",
-   "version" : "1.0.3"
+   "checksyntax" : true,
+   "version" : "1.0.4",
+   "ftype" : "python"
 }
