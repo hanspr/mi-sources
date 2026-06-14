@@ -1,5 +1,5 @@
 
-VERSION = "1.0.6"
+VERSION = "1.0.7"
 
 local indent = -1
 local home = os.getenv("HOME")
@@ -58,6 +58,10 @@ function typehintsoff()
 end
 
 function settool()
+    msg, err = ExecCommand("which", "ruff")
+    if err == nil then
+        tool = "ruff"
+    end
     msg, err = ExecCommand("which", "mypy")
     if err == nil then
         tool = "mypy"
@@ -65,10 +69,6 @@ function settool()
     msg, err = ExecCommand("which", "pylint")
     if err == nil then
         tool = "pylint"
-    end
-    msg, err = ExecCommand("which", "ruff")
-    if err == nil then
-        tool = "ruff"
     end
     messenger:Message("lint tool:", tool)
 end
@@ -94,7 +94,7 @@ function Check(view, fpath)
         end
     end
     if err ~= nil then
-        return HandleError(view, msg, strerr, "Syntax Error")
+        return HandleError(view, msg, strerr, "syntax error")
     end
     return HandleSuccess(view, tool .. " : syntax check ok")
 end
@@ -106,9 +106,9 @@ function TypeHints(view, fpath)
         return true
     end
     strerr = ":(%d+):"
-    msg, err = ExecCommand("ty", "check", fpath)
+    msg, err = ExecCommand("ty", "check", "--no-progress", fpath)
     if err ~= nil then
-        return HandleError(view, msg, strerr, "types check Error")
+        return HandleError(view, msg, strerr, "types check error")
     end
     return HandleSuccess(view, "type check ok")
 end
