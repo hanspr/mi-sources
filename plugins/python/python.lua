@@ -1,5 +1,5 @@
 
-VERSION = "1.0.4"
+VERSION = "1.0.5"
 
 local indent = -1
 local home = os.getenv("HOME")
@@ -37,13 +37,17 @@ function syntaxoff()
 end
 
 function settool()
+    msg, err = ExecCommand("which", "mypy")
+    if err == nil then
+        tool = "mypy"
+    end
     msg, err = ExecCommand("which", "pylint")
     if err == nil then
         tool = "pylint"
     end
-    msg, err = ExecCommand("which", "mypy")
+    msg, err = ExecCommand("which", "ruff")
     if err == nil then
-        tool = "mypy"
+        tool = "ruff"
     end
     messenger:Message("lint tool:", tool)
 end
@@ -58,10 +62,13 @@ function Check(view, fpath)
     if tool == "py_compile" then
         strerr = "line (%d+)"
         msg, err = ExecCommand("python3", "-m", "py_compile", fpath)
+    elseif tool == "ruff" then
+        strerr = ":(%d+):"
+        msg, err = ExecCommand("ruff", "check", fpath)
     else
         strerr = ":(%d+):"
         if tool == "pylint" then
-            msg, err = ExecCommand(tool, "--disable=C,R", fpath)
+            msg, err = ExecCommand(tool, "--disable=all", "--enable=E,unused-variable", fpath)
         else
             msg, err = ExecCommand(tool, fpath)
         end
