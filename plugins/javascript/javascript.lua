@@ -1,5 +1,5 @@
 
-VERSION = "1.0.11"
+VERSION = "1.0.12"
 
 local curLoc = {}
 local writesettings = false
@@ -33,6 +33,17 @@ function compress(view)
     else
         messenger:Error("Please install uglifyjs")
     end
+end
+
+function togglestrict()
+    if GetPluginOption("javascript", "strict") == true then
+        messenger:Message("syntax Dirty")
+        SetPluginOption("javascript", "strict", false)
+    else
+        messenger:Message("syntax Strict")
+        SetPluginOption("javascript", "strict", true)
+    end
+    WritePluginSettings("javascript")
 end
 
 function toggletidy()
@@ -73,13 +84,30 @@ function jsCheck(view, fpath)
     local scheck
     local msgp
     local msg
+    local err
+    local pcheck = "Dirty"
+    local find = ":(%d+):"
 
     if GetPluginOption("javascript", "jssyntax") == false then
         jstidy(view, fpath)
         return true
     end
-    msgp, err = ExecCommand("node", "--check", fpath)
-    if err ~= nil or string.find(msgp, "SyntaxError") ~= nil then
+    if GetPluginOption("javascript", "strict") == true then
+        msgp, err = ExecCommand("npx", "eslint", fpath)
+        pcheck = "Strict"
+        find = "%s*(%d+):"
+        for ch in string.gmatch(msgp, "Oops") do
+            messenger:Error("configure eslint correctly before use")
+            return false
+        end
+        for ch in string.gmatch(msgp, "ESLint:") do
+            messenger:Error("configure eslint correctly before use")
+            return false
+        end
+    else
+        msgp, err = ExecCommand("node", "--check", fpath)
+    end
+    if err ~= nil or string.find(msgp, "Error: ") ~= nil then
         scheck = "error"
     else
         scheck = "ok"
@@ -98,7 +126,10 @@ function jsCheck(view, fpath)
         local xy = {}
         xy.X = 0
         xy.Y = -99
-        for ch in string.gmatch(msgp, ":(%d+)") do
+        messenger:AddLog(find)
+        messenger:AddLog(msgp)
+        for ch in string.gmatch(msgp, find) do
+            messenger:AddLog(ch)
             xy.Y = tonumber(ch)-1;
             break
         end
@@ -110,7 +141,7 @@ function jsCheck(view, fpath)
             view:Center(false)
             view:Relocate()
         end
-        messenger:Error("Syntax Error")
+        messenger:Error("Syntax Error ", pcheck)
         return false
     else
         if view:GetHelperView() ~= nil then
@@ -125,7 +156,7 @@ function jsCheck(view, fpath)
         curLoc.Y = -1
         jstidy(view, fpath)
     end
-    messenger:Success("Syntax ok")
+    messenger:Success("Syntax ok ", pcheck)
     return true
 end
 
@@ -165,7 +196,8 @@ end
 function onDisplayFocus(view)
     BindKey("F9", "javascript.toggletidy")
     BindKey("F10", "javascript.jssyntaxoff")
-    BindKey("F11", "javascript.compress")
+    BindKey("F11", "javascript.togglestrict")
+    BindKey("F12", "javascript.compress")
     BindKey("AltEnter", "javascript.addcomma")
 end
 
@@ -173,11 +205,17 @@ function onDisplayBlur(view)
     BindKey("F9", "Unbindkey")
     BindKey("F10", "Unbindkey")
     BindKey("F11", "Unbindkey")
+    BindKey("F12", "Unbindkey")
     BindKey("AltEnter", "Unbindkey")
 end
 
 function onViewOpen(view)
     onDisplayFocus(view)
+end
+
+if GetPluginOption("javascript", "strict") == nil then
+    AddPluginOption("javascript", "strict", false)
+    writesettings = true
 end
 
 if GetPluginOption("javascript", "jstidy") == nil then
