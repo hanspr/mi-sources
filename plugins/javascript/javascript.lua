@@ -1,5 +1,5 @@
 
-VERSION = "1.0.12"
+VERSION = "1.0.13"
 
 local curLoc = {}
 local writesettings = false
@@ -97,11 +97,11 @@ function jsCheck(view, fpath)
         pcheck = "Strict"
         find = "%s*(%d+):"
         for ch in string.gmatch(msgp, "Oops") do
-            messenger:Error("configure eslint correctly before use")
+            view:OpenHelperView("h", "", msgp)
             return false
         end
         for ch in string.gmatch(msgp, "ESLint:") do
-            messenger:Error("configure eslint correctly before use")
+            view:OpenHelperView("h", "", msgp)
             return false
         end
     else
