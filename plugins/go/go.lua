@@ -1,5 +1,5 @@
 
-VERSION = "1.0.24"
+VERSION = "1.0.25"
 
 local curLoc = {}
 local writesettings = false
@@ -70,7 +70,7 @@ end
 
 function lint(view)
     local ps = 0
-    msg, err = ExecCommand("golangci-lint", "run", "./")
+    msg, err = ExecCommand("golangci-lint", "run", "--fix", "./")
     if err ~= nil then
         HandleError(view, msg)
         messenger:Error("golint Error")
@@ -97,26 +97,47 @@ function gofmt(view)
     end
 end
 
+function modernizefix()
+    local ps = 0
+    local view = CurView()
+
+    msg, err = ExecCommand("modernize", "--fix", "./...")
+    if err ~= nil or msg ~= "" then
+        HandleError(view, msg)
+        return false
+    else
+        HandleSuccess(view)
+    end
+    messenger:Success("modernize done")
+    return true
+end
+
 function modernize()
     local ps = 0
     local view = CurView()
 
     msg, err = ExecCommand("modernize", "./...")
     if err ~= nil or msg ~= "" then
-        nmsg = ""
-        for line in string.gmatch(msg, "([^\n]*)\n?") do
-            if string.find(line, view.Buf.Fname) ~= nil then
-                nmsg = nmsg .. line .. "\n"
-            end
-        end
-        if nmsg ~= "" then
-            HandleError(view, nmsg)
-        end
+        HandleError(view, msg)
         return false
     else
         HandleSuccess(view)
-        return true
     end
+    messenger:Success("modernize done")
+    return true
+end
+
+function getCorrectPath(ref, path)
+    local dirRef, fileRef = ref:match("^(.+)/(.-)$")
+    local dirPath, filePath = path:match("^(.+)/(.-)$")
+    if path:sub(1, 1) == "/" then
+        messenger:AddLog("absolute path")
+        return path
+    end
+    if dirRef:match(dirPath) ~= nil then
+        return dirRef .. "/" .. filePath
+    end
+    return path
 end
 
 function HandleError(view, msg)
@@ -132,6 +153,8 @@ function HandleError(view, msg)
         fname = msg:match("([%w%d_./-]+%.go):")
         if fname ~= nil then
             pfile = view.Buf.AbsPath
+            fname = getCorrectPath(pfile, fname)
+            messenger:AddLog(fname)
             view:Open(fname)
         end
     end
@@ -322,6 +345,7 @@ function onDisplayFocus(view)
     MakeCommand("golist", "go.list", 0)
     MakeCommand("godoc", "go.doc", 0)
     BindKey("F7", "go.modernize")
+    BindKey("F8", "go.modernizefix")
     BindKey("F9", "go.togglegofmt")
     BindKey("F10", "go.togglegovet")
     BindKey("F11", "go.togglegolint")

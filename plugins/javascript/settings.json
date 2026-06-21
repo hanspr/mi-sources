@@ -1,7 +1,7 @@
 {
-   "jssyntax" : true,
-   "ftype" : "javascript",
-   "version" : "1.0.13",
-   "strict" : true,
-   "jstidy" : true
+    "ftype": "javascript",
+    "jssyntax": false,
+    "jstidy": true,
+    "strict": true,
+    "version": "1.0.13"
 }
