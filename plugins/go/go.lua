@@ -1,5 +1,5 @@
 
-VERSION = "1.0.25"
+VERSION = "1.0.26"
 
 local curLoc = {}
 local writesettings = false
@@ -53,7 +53,7 @@ function vet(view)
         gomod = true
     end
     if gomod then
-        msg, err = ExecCommand("go", "vet")
+        msg, err = ExecCommand("go", "vet", "./...")
     else
         msg, err = ExecCommand("go", "vet", view.Buf.Path)
     end
@@ -70,7 +70,7 @@ end
 
 function lint(view)
     local ps = 0
-    msg, err = ExecCommand("golangci-lint", "run", "--fix", "./")
+    msg, err = ExecCommand("golangci-lint", "run", "--fix", "./...")
     if err ~= nil then
         HandleError(view, msg)
         messenger:Error("golint Error")
@@ -127,15 +127,18 @@ function modernize()
     return true
 end
 
-function getCorrectPath(ref, path)
-    local dirRef, fileRef = ref:match("^(.+)/(.-)$")
-    local dirPath, filePath = path:match("^(.+)/(.-)$")
-    if path:sub(1, 1) == "/" then
+function getCorrectPath(refAbs, partialPath)
+    if partialPath:sub(1, 1) == "/" then
         messenger:AddLog("absolute path")
         return path
     end
-    if dirRef:match(dirPath) ~= nil then
-        return dirRef .. "/" .. filePath
+    local firstDir = partialPath:match("^([^/]+)")
+    local startPos, endPos = refAbs:find(firstDir, 1, true)
+    if startPos then
+        messenger:AddLog("relative path")
+        local baseDir = refAbs:sub(1, startPos - 1)
+        local resultAbs = baseDir .. partialPath
+        return resultAbs
     end
     return path
 end
