@@ -1,5 +1,5 @@
 
-VERSION = "1.0.13"
+VERSION = "1.0.14"
 
 local curLoc = {}
 local writesettings = false
@@ -160,7 +160,7 @@ function perlCheck(view, fpath)
         xy.X = 0
         xy.Y = -99
         if string.find(msgp, "EOF") == nil then
-            for ch in string.gmatch(msgp, "line (%d+)") do
+            for ch in string.gmatch(msgp, view.Buf.Fname .. " line (%d+)") do
                 xy.Y = tonumber(ch)-1;
                 break
             end
